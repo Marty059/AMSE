@@ -14,27 +14,27 @@ const series = [
   MediaModel(
     imageUrl: 'assets/imgs/stranger-things.jpg',
     title: 'Stranger Things',
-    realisateur: 'Test',
+    realisateur: 'Matt et Ross Duffer',
   ),
   MediaModel(
     imageUrl: 'assets/imgs/mandalorian.jpg',
     title: 'The Mandalorian',
-    realisateur: 'Test',
+    realisateur: 'Jon Favreau',
   ),
   MediaModel(
     imageUrl: 'assets/imgs/peaky-blinders.webp',
     title: 'Peaky Blinders',
-    realisateur: 'Test',
+    realisateur: 'Steven Knight',
   ),
   MediaModel(
     imageUrl: 'assets/imgs/witcher.webp',
     title: 'The Witcher',
-    realisateur: 'Test',
+    realisateur: 'Lauren Schmidt Hissrich',
   ),
   MediaModel(
     imageUrl: 'assets/imgs/la-casa-de-papel.webp',
     title: 'La Casa de Papel',
-    realisateur: 'Test',
+    realisateur: 'Álex Pina',
   ),
 ];
 

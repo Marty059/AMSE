@@ -44,7 +44,7 @@ class SeriePage extends StatelessWidget {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          'Réalisateur : ${series[index].realisateur}',
+                          'Création : ${series[index].realisateur}',
                           style: TextStyle(
                             fontSize: 16,
                           ),
