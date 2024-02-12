@@ -54,6 +54,13 @@ class SeriePage extends StatelessWidget {
                     ),
                   ),
                 ),
+                IconButton(
+                  icon: Icon(Icons.favorite_border),
+                  onPressed: () {
+                    // Action lorsque le bouton est pressé
+                    // Vous pouvez mettre ici le code pour démarrer la lecture du film, par exemple
+                  },
+                )
               ],
             ),
           ),
