@@ -8,7 +8,9 @@ class FavoritesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
 
-    if (appState.favorites.isEmpty && appState.titleFavoritesFilm.isEmpty) {
+    if (appState.favorites.isEmpty &&
+        appState.titleFavoritesFilm.isEmpty &&
+        appState.titleFavoritesSeries.isEmpty) {
       return Center(
         child: Text("No favourites yet"),
       );
