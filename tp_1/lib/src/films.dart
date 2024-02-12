@@ -58,11 +58,11 @@ class FilmsPage extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  icon: appState.titleFavorites.contains(films[index].title)
+                  icon: appState.titleFavoritesFilm.contains(films[index].title)
                       ? Icon(Icons.favorite)
                       : Icon(Icons.favorite_border),
                   onPressed: () {
-                    appState.toggleFavoriteTitle(films[index].title);
+                    appState.toggleFavoriteTitleFilm(films[index].title);
                     // Action lorsque le bouton est pressé
                     // Vous pouvez mettre ici le code pour démarrer la lecture du film, par exemple
                   },

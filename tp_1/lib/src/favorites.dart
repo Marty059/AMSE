@@ -8,7 +8,7 @@ class FavoritesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
 
-    if (appState.favorites.isEmpty && appState.titleFavorites.isEmpty) {
+    if (appState.favorites.isEmpty && appState.titleFavoritesFilm.isEmpty) {
       return Center(
         child: Text("No favourites yet"),
       );
@@ -19,7 +19,7 @@ class FavoritesPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(20),
           child: Text(
-              'Vous avez ${appState.favorites.length + appState.titleFavorites.length} favoris:'),
+              'Vous avez ${appState.favorites.length + appState.titleFavoritesFilm.length + appState.titleFavoritesSeries.length} favoris:'),
         ),
         SizedBox(width: 10),
         for (var pair in appState.favorites)
@@ -30,7 +30,7 @@ class FavoritesPage extends StatelessWidget {
         SizedBox(width: 10),
         Divider(),
         SizedBox(width: 10),
-        for (var titre in appState.titleFavorites)
+        for (var titre in appState.titleFavoritesFilm)
           ListTile(
             leading: Icon(Icons.favorite),
             title: Text(
@@ -38,6 +38,15 @@ class FavoritesPage extends StatelessWidget {
             ),
           ),
         SizedBox(width: 10),
+        Divider(),
+        SizedBox(width: 10),
+        for (var titre in appState.titleFavoritesSeries)
+          ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text(
+              "Série : $titre",
+            ),
+          ),
       ],
     );
   }

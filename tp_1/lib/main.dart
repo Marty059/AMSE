@@ -41,7 +41,8 @@ class MyAppState extends ChangeNotifier {
 
   var favorites = <WordPair>[];
 
-  var titleFavorites = <String>[];
+  var titleFavoritesFilm = <String>[];
+  var titleFavoritesSeries = <String>[];
 
   void toggleFavorite() {
     if (favorites.contains(current)) {
@@ -52,11 +53,20 @@ class MyAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleFavoriteTitle(titre) {
-    if (titleFavorites.contains(titre)) {
-      titleFavorites.remove(titre);
+  void toggleFavoriteTitleFilm(titre) {
+    if (titleFavoritesFilm.contains(titre)) {
+      titleFavoritesFilm.remove(titre);
     } else {
-      titleFavorites.add(titre);
+      titleFavoritesFilm.add(titre);
+    }
+    notifyListeners();
+  }
+
+  void toggleFavoriteTitleSeries(titre) {
+    if (titleFavoritesSeries.contains(titre)) {
+      titleFavoritesSeries.remove(titre);
+    } else {
+      titleFavoritesSeries.add(titre);
     }
     notifyListeners();
   }
