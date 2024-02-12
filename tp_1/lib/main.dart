@@ -5,6 +5,7 @@ import 'package:tp_1/src/books.dart';
 import 'package:tp_1/src/favorites.dart';
 import 'package:tp_1/src/films.dart';
 import 'package:tp_1/src/generator.dart';
+import 'package:tp_1/src/music.dart';
 
 void main() {
   runApp(MyApp());
@@ -75,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = FilmsPage();
         break;
       case 4:
-        page = Placeholder();
+        page = MusicPage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
