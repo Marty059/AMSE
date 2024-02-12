@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tp_1/src/books.dart';
 
 void main() {
   runApp(MyApp());
@@ -65,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = FavoritesPage();
         break;
       case 2:
-        page = Placeholder();
+        page = BooksPage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
