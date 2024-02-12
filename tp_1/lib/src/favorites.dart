@@ -50,6 +50,16 @@ class FavoritesPage extends StatelessWidget {
               "Série : $titre",
             ),
           ),
+        SizedBox(width: 10),
+        Divider(),
+        SizedBox(width: 10),
+        for (var titre in appState.titleFavoritesLivres)
+          ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text(
+              "Livres : $titre",
+            ),
+          ),
       ],
     );
   }
