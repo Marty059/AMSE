@@ -24,4 +24,9 @@ const films = [
     title: 'Dragon',
     description: 'Test',
   ),
+  MediaModel(
+    imageUrl: 'assets/imgs/Private_Ryan.jpg',
+    title: 'Il faut sauver le soldat Ryan',
+    description: 'Test',
+  ),
 ];
