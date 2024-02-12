@@ -6,40 +6,101 @@ import 'package:tp_1/main.dart';
 class GeneratorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: 30),
+            // Image
+            Center(
+              child: Image.asset(
+                'assets/imgs/bibliotheque.jpg',
+                width: 300,
+                height: 200,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(height: 20),
+            // Home page content
+            Text(
+              'Welcome to the Media Management App!',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'Browse books, series, and movies and add them to your favorites.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[700],
+                ),
+              ),
+            ),
+            SizedBox(height: 40),
+            // Developers
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildDeveloperInfo(
+                  'Martin Delsart',
+                  'assets/imgs/martin_delsart.jpg',
+                ),
+                SizedBox(width: 40),
+                _buildDeveloperInfo(
+                  'Géry Bellanger',
+                  'assets/imgs/gery_bellanger.jpeg',
+                ),
+              ],
+            ),
+            SizedBox(height: 40),
+            // Contact information
+            _buildContactInfo(Icons.phone, 'Contact us: 123-456-7890'),
+            _buildContactInfo(Icons.mail, 'Email: info@mediaapp.com'),
+          ],
+        ),
+      ),
+    );
+  }
 
-    IconData icon;
-    if (appState.favorites.contains(pair)) {
-      icon = Icons.favorite;
-    } else {
-      icon = Icons.favorite_border;
-    }
+  Widget _buildDeveloperInfo(String name, String imagePath) {
+    return Column(
+      children: [
+        CircleAvatar(
+          backgroundImage: AssetImage(imagePath),
+          radius: 50,
+        ),
+        SizedBox(height: 10),
+        Text(
+          name,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+      ],
+    );
+  }
 
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+  Widget _buildContactInfo(IconData icon, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      child: Row(
         children: [
-          BigCard(pair: pair),
-          SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(icon),
-                label: Text('Like'),
-              ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: Text('Next'),
-              ),
-            ],
+          Icon(icon, color: Colors.blue),
+          SizedBox(width: 10),
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[700],
+            ),
           ),
         ],
       ),
