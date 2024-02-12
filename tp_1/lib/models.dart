@@ -3,9 +3,25 @@ class MediaModel {
   final String title;
   final String description;
 
-  MediaModel({
+  const MediaModel({
     required this.imageUrl,
     required this.title,
     required this.description,
   });
 }
+
+const series = [
+  MediaModel(
+    imageUrl: 'assets/imgs/stranger-things.jpg',
+    title: 'Stranger Things',
+    description: 'Test',
+  ),
+];
+
+const films = [
+  MediaModel(
+    imageUrl: 'assets/imgs/dragon.jpg',
+    title: 'Dragon',
+    description: 'Test',
+  ),
+];
