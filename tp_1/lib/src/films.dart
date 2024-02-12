@@ -1,11 +1,11 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tp_1/main.dart';
+import 'package:flutter/material.dart';
 import 'package:tp_1/models.dart';
 
 class FilmsPage extends StatelessWidget {
-  const FilmsPage({super.key});
+  const FilmsPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +13,33 @@ class FilmsPage extends StatelessWidget {
       itemCount: films.length,
       itemBuilder: (BuildContext context, int index) {
         return Card(
-          child: ListTile(
-            leading: Image.asset(films[index]
-                .imageUrl), // Utilise Image.asset pour les images dans les assets
-            trailing: Text(films[index].title),
+          child: SizedBox(
+            height: 150,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      films[index].imageUrl,
+                      fit: BoxFit
+                          .cover, // Ajuste l'image pour remplir le conteneur sans déformation
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      films[index].title,
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
