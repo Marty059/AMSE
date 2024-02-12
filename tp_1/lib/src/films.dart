@@ -24,7 +24,7 @@ class FilmsPage extends StatelessWidget {
                     child: Image.asset(
                       films[index].imageUrl,
                       fit: BoxFit
-                          .cover, // Ajuste l'image pour remplir le conteneur sans déformation
+                          .contain, // Ajuste l'image pour entrer entièrement dans le conteneur sans déformation
                     ),
                   ),
                 ),
