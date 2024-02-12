@@ -41,11 +41,22 @@ class MyAppState extends ChangeNotifier {
 
   var favorites = <WordPair>[];
 
+  var titleFavorites = <String>[];
+
   void toggleFavorite() {
     if (favorites.contains(current)) {
       favorites.remove(current);
     } else {
       favorites.add(current);
+    }
+    notifyListeners();
+  }
+
+  void toggleFavoriteTitle(titre) {
+    if (titleFavorites.contains(titre)) {
+      titleFavorites.remove(titre);
+    } else {
+      titleFavorites.add(titre);
     }
     notifyListeners();
   }

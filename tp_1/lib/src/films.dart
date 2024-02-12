@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:tp_1/main.dart';
 import 'package:tp_1/models.dart';
 
 class FilmsPage extends StatelessWidget {
@@ -9,6 +10,8 @@ class FilmsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+
     return ListView.builder(
       itemCount: films.length,
       itemBuilder: (BuildContext context, int index) {
@@ -55,8 +58,11 @@ class FilmsPage extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.favorite_border),
+                  icon: appState.titleFavorites.contains(films[index].title)
+                      ? Icon(Icons.favorite)
+                      : Icon(Icons.favorite_border),
                   onPressed: () {
+                    appState.toggleFavoriteTitle(films[index].title);
                     // Action lorsque le bouton est pressé
                     // Vous pouvez mettre ici le code pour démarrer la lecture du film, par exemple
                   },
