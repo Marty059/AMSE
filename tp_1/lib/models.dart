@@ -29,4 +29,19 @@ const films = [
     title: 'Il faut sauver le soldat Ryan',
     description: 'Test',
   ),
+  MediaModel(
+    imageUrl: 'assets/imgs/interstellar.jpg',
+    title: 'Interstellar',
+    description: 'Test',
+  ),
+  MediaModel(
+    imageUrl: 'assets/imgs/inception.jpg',
+    title: 'Inception',
+    description: 'Test',
+  ),
+  MediaModel(
+    imageUrl: 'assets/imgs/inglourious-basterds.jpg',
+    title: 'Inglourious Basterds',
+    description: 'Test',
+  ),
 ];
