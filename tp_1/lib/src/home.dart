@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:tp_1/main.dart';
-import 'package:tp_1/models.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -12,7 +9,7 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 30),
-            // Image
+
             Center(
               child: Image.asset(
                 'assets/imgs/bibliotheque.jpg',
@@ -22,7 +19,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            // Home page content
+
             Text(
               'Bienvenue sur notre app de gestion de médias !',
               textAlign: TextAlign.center,
@@ -46,7 +43,6 @@ class HomePage extends StatelessWidget {
             ),
             SizedBox(height: 60),
 
-            // Team
             Text(
               'Notre équipe de développeurs :',
               textAlign: TextAlign.center,
@@ -73,9 +69,8 @@ class HomePage extends StatelessWidget {
               ],
             ),
             SizedBox(height: 40),
-            // Contact information
-            _buildContactInfo(Icons.phone, 'Contact : +33 06 36 30 36 30 '),
-            _buildContactInfo(Icons.mail, 'Email : gery_et_martin@gmail.com'),
+            _buildContactInfo(Icons.phone, 'Contact: +33 06 36 30 36 30 '),
+            _buildContactInfo(Icons.mail, 'Email: gery_et_martin@gmail.com'),
           ],
         ),
       ),
