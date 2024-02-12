@@ -25,6 +25,7 @@ class HomePage extends StatelessWidget {
             // Home page content
             Text(
               'Bienvenue sur notre app de gestion de médias !',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -93,7 +94,7 @@ class HomePage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: Row(
         children: [
-          Icon(icon, color: Colors.blue),
+          Icon(icon, color: Color.fromARGB(255, 14, 81, 227)),
           SizedBox(width: 10),
           Text(
             text,
