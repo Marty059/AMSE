@@ -18,7 +18,8 @@ class FavoritesPage extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(20),
-          child: Text('You have ${appState.favorites.length} favorites:'),
+          child: Text(
+              'Vous avez ${appState.favorites.length + appState.titleFavorites.length} favoris:'),
         ),
         SizedBox(width: 10),
         for (var pair in appState.favorites)
@@ -27,11 +28,13 @@ class FavoritesPage extends StatelessWidget {
             title: Text(pair.asLowerCase),
           ),
         SizedBox(width: 10),
+        Divider(),
+        SizedBox(width: 10),
         for (var titre in appState.titleFavorites)
           ListTile(
             leading: Icon(Icons.favorite),
             title: Text(
-              titre.toLowerCase(),
+              "Film : $titre",
             ),
           ),
         SizedBox(width: 10),
