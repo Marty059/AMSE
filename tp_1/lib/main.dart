@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tp_1/src/books.dart';
 import 'package:tp_1/src/favorites.dart';
+import 'package:tp_1/src/films.dart';
 import 'package:tp_1/src/generator.dart';
 
 void main() {
@@ -70,6 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 2:
         page = BooksPage();
         break;
+      case 3:
+        page = FilmsPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -93,6 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   NavigationRailDestination(
                     icon: Icon(Icons.book),
                     label: Text('Books'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.movie),
+                    label: Text('Films'),
                   ),
                 ],
                 selectedIndex: selectedIndex,
