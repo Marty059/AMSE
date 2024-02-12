@@ -74,6 +74,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 3:
         page = FilmsPage();
         break;
+      case 4:
+        page = Placeholder();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -103,6 +106,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.movie),
                   label: 'Films',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.music_note),
+                  label: 'Musique',
                 ),
               ],
               currentIndex: selectedIndex,
