@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   NavigationRailDestination(
                     icon: Icon(Icons.book),
-                    label: Text('Books'),
+                    label: Text('Booooooks'),
                   ),
                   NavigationRailDestination(
                     icon: Icon(Icons.movie),
