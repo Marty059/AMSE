@@ -74,8 +74,8 @@ class HomePage extends StatelessWidget {
             ),
             SizedBox(height: 40),
             // Contact information
-            _buildContactInfo(Icons.phone, 'Contact us: +33 06 36 30 36 30 '),
-            _buildContactInfo(Icons.mail, 'Email: gery_et_martin@gmail.com'),
+            _buildContactInfo(Icons.phone, 'Contact : +33 06 36 30 36 30 '),
+            _buildContactInfo(Icons.mail, 'Email : gery_et_martin@gmail.com'),
           ],
         ),
       ),
