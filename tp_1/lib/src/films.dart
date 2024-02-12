@@ -40,17 +40,15 @@ class FilmsPage extends StatelessWidget {
                         Text(
                           films[index].title,
                           style: TextStyle(
-                            fontSize: 18, // Taille légèrement plus grande
-                            fontWeight: FontWeight.bold, // Texte en gras
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
-                            height:
-                                8), // Espace entre le titre et le réalisateur
+                        SizedBox(height: 8),
                         Text(
-                          'Réalisateur: ${films[index].realisateur}',
+                          'Réalisateur : ${films[index].realisateur}',
                           style: TextStyle(
-                            fontSize: 16, // Taille normale pour le réalisateur
+                            fontSize: 16,
                           ),
                         ),
                       ],
@@ -63,8 +61,6 @@ class FilmsPage extends StatelessWidget {
                       : Icon(Icons.favorite_border),
                   onPressed: () {
                     appState.toggleFavoriteTitleFilm(films[index].title);
-                    // Action lorsque le bouton est pressé
-                    // Vous pouvez mettre ici le code pour démarrer la lecture du film, par exemple
                   },
                 ),
               ],

@@ -40,17 +40,15 @@ class BooksPage extends StatelessWidget {
                         Text(
                           books[index].title,
                           style: TextStyle(
-                            fontSize: 18, // Taille légèrement plus grande
-                            fontWeight: FontWeight.bold, // Texte en gras
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
-                            height:
-                                8), // Espace entre le titre et le réalisateur
+                        SizedBox(height: 8),
                         Text(
                           'Auteur : ${books[index].realisateur}',
                           style: TextStyle(
-                            fontSize: 16, // Taille normale pour le réalisateur
+                            fontSize: 16,
                           ),
                         ),
                       ],
@@ -64,8 +62,6 @@ class BooksPage extends StatelessWidget {
                           : Icon(Icons.favorite_border),
                   onPressed: () {
                     appState.toggleFavoriteTitleLivres(books[index].title);
-                    // Action lorsque le bouton est pressé
-                    // Vous pouvez mettre ici le code pour démarrer la lecture du film, par exemple
                   },
                 ),
               ],

@@ -44,7 +44,19 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 40),
+            SizedBox(height: 60),
+
+            // Team
+            Text(
+              'Notre équipe de développeurs :',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(height: 10),
+
             // Developers
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
