@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:tp_1/main.dart';
 import 'package:tp_1/models.dart';
 
-class FilmsPage extends StatelessWidget {
-  const FilmsPage({Key? key}) : super(key: key);
+class BooksPage extends StatelessWidget {
+  const BooksPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +58,12 @@ class FilmsPage extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  icon: appState.titleFavoritesFilm.contains(films[index].title)
-                      ? Icon(Icons.favorite)
-                      : Icon(Icons.favorite_border),
+                  icon:
+                      appState.titleFavoritesLivres.contains(books[index].title)
+                          ? Icon(Icons.favorite)
+                          : Icon(Icons.favorite_border),
                   onPressed: () {
-                    appState.toggleFavoriteTitleFilm(films[index].title);
+                    appState.toggleFavoriteTitleFilm(books[index].title);
                     // Action lorsque le bouton est pressé
                     // Vous pouvez mettre ici le code pour démarrer la lecture du film, par exemple
                   },
