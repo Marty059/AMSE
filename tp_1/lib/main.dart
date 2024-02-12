@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               selectedItemColor: Theme.of(context)
                   .colorScheme
-                  .primaryContainer, // Couleur des éléments sélectionnés
+                  .primary, // Couleur des éléments sélectionnés
               unselectedItemColor: Colors.grey,
             ),
           );
