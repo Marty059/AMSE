@@ -28,7 +28,7 @@ class GeneratorPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.blue,
+                color: Theme.of(context).colorScheme.primaryContainer,
               ),
             ),
             SizedBox(height: 10),
