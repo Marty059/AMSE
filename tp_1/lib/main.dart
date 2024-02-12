@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tp_1/src/books.dart';
 import 'package:tp_1/src/favorites.dart';
 import 'package:tp_1/src/films.dart';
-import 'package:tp_1/src/generator.dart';
+import 'package:tp_1/src/home.dart';
 import 'package:tp_1/src/series.dart';
 
 void main() {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
-        title: 'Namer App',
+        title: 'Géry et Martin app',
         theme: ThemeData(
           useMaterial3: true,
           colorScheme:
@@ -95,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = GeneratorPage();
+        page = HomePage();
         break;
       case 1:
         page = FavoritesPage();
