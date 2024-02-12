@@ -13,7 +13,7 @@ class FavoritesPage extends StatelessWidget {
         appState.titleFavoritesSeries.isEmpty &&
         appState.titleFavoritesLivres.isEmpty) {
       return Center(
-        child: Text("No favourites yet"),
+        child: Text("Pas de favoris pour l'instant."),
       );
     }
 
