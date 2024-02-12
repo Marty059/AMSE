@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:tp_1/models.dart';
 
 class SeriePage extends StatelessWidget {
-  const SeriePage({Key? key});
+  const SeriePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: films.length,
+      itemCount: series.length,
       itemBuilder: (BuildContext context, int index) {
         return Card(
           child: SizedBox(
@@ -22,9 +22,8 @@ class SeriePage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Image.asset(
-                      films[index].imageUrl,
-                      fit: BoxFit
-                          .contain, // Ajuste l'image pour entrer entièrement dans le conteneur sans déformation
+                      series[index].imageUrl,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
@@ -32,9 +31,26 @@ class SeriePage extends StatelessWidget {
                   flex: 3,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      films[index].title,
-                      style: TextStyle(fontSize: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          series[index].title,
+                          style: TextStyle(
+                            fontSize: 18, // Taille légèrement plus grande
+                            fontWeight: FontWeight.bold, // Texte en gras
+                          ),
+                        ),
+                        SizedBox(
+                            height:
+                                8), // Espace entre le titre et le réalisateur
+                        Text(
+                          'Réalisateur: ${series[index].realisateur}',
+                          style: TextStyle(
+                            fontSize: 16, // Taille normale pour le réalisateur
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
