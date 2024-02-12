@@ -65,3 +65,31 @@ const films = [
     realisateur: 'Quentin Tarantino',
   ),
 ];
+
+const livres = [
+  MediaModel(
+    imageUrl: 'assets/imgs/seigneur-anneaux.jpg',
+    title: 'Le Seigneur des Anneaux',
+    realisateur: 'J.R.R. Tolkien',
+  ),
+  MediaModel(
+    imageUrl: 'assets/imgs/livre2.jpg',
+    title: 'Harry Potter à l\'école des sorciers',
+    realisateur: 'J.K. Rowling',
+  ),
+  MediaModel(
+    imageUrl: 'assets/imgs/harry-potter.jpg',
+    title: '1984',
+    realisateur: 'George Orwell',
+  ),
+  MediaModel(
+    imageUrl: 'assets/imgs/petit-prince.jpg',
+    title: 'Le Petit Prince',
+    realisateur: 'Antoine de Saint-Exupéry',
+  ),
+  MediaModel(
+    imageUrl: 'assets/imgs/luc-fabresse',
+    title: 'L\'incroyable vie de Luc Fabresse',
+    realisateur: 'Géry Bellanger et Martin Delsart',
+  ),
+];
