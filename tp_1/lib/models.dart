@@ -1,12 +1,12 @@
 class MediaModel {
   final String imageUrl;
   final String title;
-  final String description;
+  final String realisateur;
 
   const MediaModel({
     required this.imageUrl,
     required this.title,
-    required this.description,
+    required this.realisateur,
   });
 }
 
@@ -14,7 +14,7 @@ const series = [
   MediaModel(
     imageUrl: 'assets/imgs/stranger-things.jpg',
     title: 'Stranger Things',
-    description: 'Test',
+    realisateur: 'Test',
   ),
 ];
 
@@ -22,26 +22,26 @@ const films = [
   MediaModel(
     imageUrl: 'assets/imgs/dragon.jpg',
     title: 'Dragon',
-    description: 'Test',
+    realisateur: 'Dean DeBlois',
   ),
   MediaModel(
     imageUrl: 'assets/imgs/Private_Ryan.jpg',
     title: 'Il faut sauver le soldat Ryan',
-    description: 'Test',
+    realisateur: 'Steven Spielberg',
   ),
   MediaModel(
     imageUrl: 'assets/imgs/interstellar.jpg',
     title: 'Interstellar',
-    description: 'Test',
+    realisateur: 'Christopher Nolan',
   ),
   MediaModel(
     imageUrl: 'assets/imgs/inception.webp',
     title: 'Inception',
-    description: 'Test',
+    realisateur: 'Christopher Nolan',
   ),
   MediaModel(
-    imageUrl: 'assets/imgs/inglourious_basterds.jpg',
+    imageUrl: 'assets/imgs/inglourious-basterds.jpg',
     title: 'Inglourious Basterds',
-    description: 'Test',
+    realisateur: 'Quentin Tarantino',
   ),
 ];

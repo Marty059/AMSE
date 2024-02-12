@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:tp_1/models.dart';
 
 class FilmsPage extends StatelessWidget {
-  const FilmsPage({Key? key});
+  const FilmsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +23,7 @@ class FilmsPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Image.asset(
                       films[index].imageUrl,
-                      fit: BoxFit
-                          .contain, // Ajuste l'image pour entrer entièrement dans le conteneur sans déformation
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
@@ -32,9 +31,26 @@ class FilmsPage extends StatelessWidget {
                   flex: 3,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      films[index].title,
-                      style: TextStyle(fontSize: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          films[index].title,
+                          style: TextStyle(
+                            fontSize: 18, // Taille légèrement plus grande
+                            fontWeight: FontWeight.bold, // Texte en gras
+                          ),
+                        ),
+                        SizedBox(
+                            height:
+                                8), // Espace entre le titre et le réalisateur
+                        Text(
+                          'Réalisateur: ${films[index].realisateur}',
+                          style: TextStyle(
+                            fontSize: 16, // Taille normale pour le réalisateur
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
