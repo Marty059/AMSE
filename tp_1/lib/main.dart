@@ -8,7 +8,7 @@ import 'package:tp_1/src/series.dart';
 
 // Bonjour Monsieur !
 // Notre applications permet de se balader entre 5 pages :
-// La page d'accueil, Les favoris, Les Livres, Les films et Les séries
+// La page d'accueil, Les favoris, Les livres, Les films et Les séries
 // Vous pouvez mettre en favoris des livres/films/séries. (Le deuxième livre vous plaira beaucoup).
 // Chaque page est dans un fichier distinct.
 // Les modèles de présentation sont aussi dans un fichier distinct.
