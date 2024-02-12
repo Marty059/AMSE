@@ -39,20 +39,9 @@ class MyAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  var favorites = <WordPair>[];
-
   var titleFavoritesFilm = <String>[];
   var titleFavoritesSeries = <String>[];
   var titleFavoritesLivres = <String>[];
-
-  void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
-    } else {
-      favorites.add(current);
-    }
-    notifyListeners();
-  }
 
   void toggleFavoriteTitleFilm(titre) {
     if (titleFavoritesFilm.contains(titre)) {
@@ -157,35 +146,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class BigCard extends StatelessWidget {
-  const BigCard({
-    super.key,
-    required this.pair,
-  });
-
-  final WordPair pair;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    final style = theme.textTheme.displayMedium!.copyWith(
-      color: theme.colorScheme.onPrimary,
-      fontWeight: FontWeight.bold,
-    );
-
-    return Card(
-      color: theme.colorScheme.primary,
-      elevation: 3.0,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Text(pair.asLowerCase,
-            style: style, semanticsLabel: "${pair.first} ${pair.second}"),
       ),
     );
   }
