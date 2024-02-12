@@ -24,7 +24,7 @@ class GeneratorPage extends StatelessWidget {
             SizedBox(height: 20),
             // Home page content
             Text(
-              'Welcome to the Media Management App!',
+              'Bienvenu sur notre app de gestion de médias !',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -35,7 +35,7 @@ class GeneratorPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                'Browse books, series, and movies and add them to your favorites.',
+                'Baladez-vous parmis des dizaines de séries, livres et films',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -61,8 +61,8 @@ class GeneratorPage extends StatelessWidget {
             ),
             SizedBox(height: 40),
             // Contact information
-            _buildContactInfo(Icons.phone, 'Contact us: 123-456-7890'),
-            _buildContactInfo(Icons.mail, 'Email: info@mediaapp.com'),
+            _buildContactInfo(Icons.phone, 'Contact us: +33 06 36 30 36 30 '),
+            _buildContactInfo(Icons.mail, 'Email: gery_et_martin@gmail.com'),
           ],
         ),
       ),
