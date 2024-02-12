@@ -105,15 +105,15 @@ class _MyHomePageState extends State<MyHomePage> {
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
-                  label: 'Home',
+                  label: 'Maison',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.favorite),
-                  label: 'Favorites',
+                  label: 'Favoris',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.book),
-                  label: 'Booooooks',
+                  label: 'Livres',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.movie),
@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.tv),
-                  label: 'Series',
+                  label: 'Séries',
                 ),
               ],
               currentIndex: selectedIndex,
