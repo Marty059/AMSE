@@ -1,4 +1,3 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tp_1/src/books.dart';
@@ -40,13 +39,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
-
-  void getNext() {
-    current = WordPair.random();
-    notifyListeners();
-  }
-
   var titleFavoritesFilm = <String>[];
   var titleFavoritesSeries = <String>[];
   var titleFavoritesLivres = <String>[];

@@ -73,6 +73,11 @@ const books = [
     realisateur: 'J.R.R. Tolkien',
   ),
   MediaModel(
+    imageUrl: 'assets/imgs/luc-fabresse.jpg',
+    title: 'L\'incroyable vie de Luc Fabresse',
+    realisateur: 'Géry Bellanger et Martin Delsart',
+  ),
+  MediaModel(
     imageUrl: 'assets/imgs/harry-potter.jpg',
     title: 'Harry Potter à l\'école des sorciers',
     realisateur: 'J.K. Rowling',
@@ -86,10 +91,5 @@ const books = [
     imageUrl: 'assets/imgs/petit-prince.jpg',
     title: 'Le Petit Prince',
     realisateur: 'Antoine de Saint-Exupéry',
-  ),
-  MediaModel(
-    imageUrl: 'assets/imgs/luc-fabresse.jpg',
-    title: 'L\'incroyable vie de Luc Fabresse',
-    realisateur: 'Géry Bellanger et Martin Delsart',
   ),
 ];
