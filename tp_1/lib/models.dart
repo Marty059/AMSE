@@ -35,12 +35,12 @@ const films = [
     description: 'Test',
   ),
   MediaModel(
-    imageUrl: 'assets/imgs/inception.jpg',
+    imageUrl: 'assets/imgs/inception.webp',
     title: 'Inception',
     description: 'Test',
   ),
   MediaModel(
-    imageUrl: 'assets/imgs/inglourious-basterds.jpg',
+    imageUrl: 'assets/imgs/inglourious_basterds.jpg',
     title: 'Inglourious Basterds',
     description: 'Test',
   ),
