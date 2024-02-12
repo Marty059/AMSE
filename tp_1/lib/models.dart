@@ -73,12 +73,12 @@ const books = [
     realisateur: 'J.R.R. Tolkien',
   ),
   MediaModel(
-    imageUrl: 'assets/imgs/livre2.jpg',
+    imageUrl: 'assets/imgs/harry-potter.jpg',
     title: 'Harry Potter à l\'école des sorciers',
     realisateur: 'J.K. Rowling',
   ),
   MediaModel(
-    imageUrl: 'assets/imgs/harry-potter.jpg',
+    imageUrl: 'assets/imgs/1984.jpg',
     title: '1984',
     realisateur: 'George Orwell',
   ),
@@ -88,7 +88,7 @@ const books = [
     realisateur: 'Antoine de Saint-Exupéry',
   ),
   MediaModel(
-    imageUrl: 'assets/imgs/luc-fabresse',
+    imageUrl: 'assets/imgs/luc-fabresse.jpg',
     title: 'L\'incroyable vie de Luc Fabresse',
     realisateur: 'Géry Bellanger et Martin Delsart',
   ),
