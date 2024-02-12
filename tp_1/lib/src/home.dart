@@ -9,7 +9,6 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 30),
-
             Center(
               child: Image.asset(
                 'assets/imgs/bibliotheque.jpg',
@@ -19,7 +18,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-
             Text(
               'Bienvenue sur notre app de gestion de médias !',
               textAlign: TextAlign.center,
@@ -42,7 +40,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 60),
-
             Text(
               'Notre équipe de développeurs :',
               textAlign: TextAlign.center,
@@ -52,8 +49,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-
-            // Developers
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
