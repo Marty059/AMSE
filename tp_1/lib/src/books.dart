@@ -63,7 +63,7 @@ class BooksPage extends StatelessWidget {
                           ? Icon(Icons.favorite)
                           : Icon(Icons.favorite_border),
                   onPressed: () {
-                    appState.toggleFavoriteTitleFilm(books[index].title);
+                    appState.toggleFavoriteTitleLivres(books[index].title);
                     // Action lorsque le bouton est pressé
                     // Vous pouvez mettre ici le code pour démarrer la lecture du film, par exemple
                   },
