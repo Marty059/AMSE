@@ -5,7 +5,7 @@ import 'package:tp_1/src/books.dart';
 import 'package:tp_1/src/favorites.dart';
 import 'package:tp_1/src/films.dart';
 import 'package:tp_1/src/generator.dart';
-import 'package:tp_1/src/music.dart';
+import 'package:tp_1/src/series.dart';
 
 void main() {
   runApp(MyApp());
@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = FilmsPage();
         break;
       case 4:
-        page = MusicPage();
+        page = SeriePage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -109,8 +109,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: 'Films',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.music_note),
-                  label: 'Musique',
+                  icon: Icon(Icons.tv),
+                  label: 'Series',
                 ),
               ],
               currentIndex: selectedIndex,

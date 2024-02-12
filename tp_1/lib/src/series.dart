@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:tp_1/models.dart';
 
-class MusicPage extends StatelessWidget {
-  const MusicPage({Key? key});
+class SeriePage extends StatelessWidget {
+  const SeriePage({Key? key});
 
   @override
   Widget build(BuildContext context) {
