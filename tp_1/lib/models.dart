@@ -66,7 +66,7 @@ const films = [
   ),
 ];
 
-const livres = [
+const books = [
   MediaModel(
     imageUrl: 'assets/imgs/seigneur-anneaux.jpg',
     title: 'Le Seigneur des Anneaux',
