@@ -31,34 +31,50 @@ class FavoritesPage extends StatelessWidget {
             title: Text(pair.asLowerCase),
           ),
         SizedBox(width: 10),
-        Divider(),
-        SizedBox(width: 10),
-        for (var titre in appState.titleFavoritesFilm)
-          ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text(
-              "Film : $titre",
-            ),
+        if (appState.titleFavoritesFilm.isNotEmpty) // Ajoutez cette condition
+          Column(
+            children: [
+              Divider(),
+              SizedBox(width: 10),
+              for (var titre in appState.titleFavoritesFilm)
+                ListTile(
+                  leading: Icon(Icons.favorite),
+                  title: Text(
+                    "Film : $titre",
+                  ),
+                ),
+              SizedBox(width: 10),
+            ],
           ),
-        SizedBox(width: 10),
-        Divider(),
-        SizedBox(width: 10),
-        for (var titre in appState.titleFavoritesSeries)
-          ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text(
-              "Série : $titre",
-            ),
+        if (appState.titleFavoritesSeries.isNotEmpty) // Ajoutez cette condition
+          Column(
+            children: [
+              Divider(),
+              SizedBox(width: 10),
+              for (var titre in appState.titleFavoritesSeries)
+                ListTile(
+                  leading: Icon(Icons.favorite),
+                  title: Text(
+                    "Série : $titre",
+                  ),
+                ),
+              SizedBox(width: 10),
+            ],
           ),
-        SizedBox(width: 10),
-        Divider(),
-        SizedBox(width: 10),
-        for (var titre in appState.titleFavoritesLivres)
-          ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text(
-              "Livres : $titre",
-            ),
+        if (appState.titleFavoritesLivres.isNotEmpty) // Ajoutez cette condition
+          Column(
+            children: [
+              Divider(),
+              SizedBox(width: 10),
+              for (var titre in appState.titleFavoritesLivres)
+                ListTile(
+                  leading: Icon(Icons.favorite),
+                  title: Text(
+                    "Livre : $titre",
+                  ),
+                ),
+              SizedBox(width: 10),
+            ],
           ),
       ],
     );
