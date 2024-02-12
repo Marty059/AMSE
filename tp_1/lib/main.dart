@@ -139,9 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   selectedIndex = value;
                 });
               },
-              selectedItemColor: Theme.of(context)
-                  .colorScheme
-                  .primary, // Couleur des éléments sélectionnés
+              selectedItemColor: Theme.of(context).colorScheme.primary,
               unselectedItemColor: Colors.grey,
             ),
           );

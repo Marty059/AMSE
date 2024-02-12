@@ -23,7 +23,7 @@ class FavoritesPage extends StatelessWidget {
               'Vous avez ${appState.titleFavoritesFilm.length + appState.titleFavoritesSeries.length + appState.titleFavoritesLivres.length} favoris:'),
         ),
         SizedBox(width: 10),
-        if (appState.titleFavoritesFilm.isNotEmpty) // Ajoutez cette condition
+        if (appState.titleFavoritesFilm.isNotEmpty)
           Column(
             children: [
               Divider(),
@@ -38,7 +38,7 @@ class FavoritesPage extends StatelessWidget {
               SizedBox(width: 10),
             ],
           ),
-        if (appState.titleFavoritesSeries.isNotEmpty) // Ajoutez cette condition
+        if (appState.titleFavoritesSeries.isNotEmpty)
           Column(
             children: [
               Divider(),
@@ -53,7 +53,7 @@ class FavoritesPage extends StatelessWidget {
               SizedBox(width: 10),
             ],
           ),
-        if (appState.titleFavoritesLivres.isNotEmpty) // Ajoutez cette condition
+        if (appState.titleFavoritesLivres.isNotEmpty)
           Column(
             children: [
               Divider(),
