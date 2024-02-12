@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tp_1/main.dart';
 
-class GeneratorPage extends StatelessWidget {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +24,7 @@ class GeneratorPage extends StatelessWidget {
             SizedBox(height: 20),
             // Home page content
             Text(
-              'Bienvenu sur notre app de gestion de médias !',
+              'Bienvenue sur notre app de gestion de médias !',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -35,7 +35,7 @@ class GeneratorPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                'Baladez-vous parmis des dizaines de séries, livres et films',
+                'Baladez-vous parmi des dizaines de séries, livres et films',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
