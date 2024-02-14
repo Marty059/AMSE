@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tp2/Exo1.dart';
+import 'package:tp2/Exo2.dart';
 
 void main() {
   runApp(MyApp());
@@ -50,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = Exo1();
         break;
       case 1:
-        page = Placeholder();
+        page = Exo2();
         break;
       case 2:
         page = Placeholder();
