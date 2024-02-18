@@ -49,6 +49,7 @@ class _Exo2State extends State<Exo2> {
                 child: Container(
                   child: Image.network(
                     'https://picsum.photos/512/1024',
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),

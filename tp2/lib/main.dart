@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tp2/Exo1.dart';
 import 'package:tp2/Exo2.dart';
+import 'package:tp2/Exo4.dart';
+import 'package:tp2/Exo5.dart';
 
 void main() {
   runApp(MyApp());
@@ -54,10 +56,10 @@ class _MyHomePageState extends State<MyHomePage> {
         page = Exo2();
         break;
       case 2:
-        page = Placeholder();
+        page = Exo4();
         break;
       case 3:
-        page = Placeholder();
+        page = Exo5();
         break;
       case 4:
         page = Placeholder();
@@ -91,12 +93,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: 'Exo2',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.three_k),
-                  label: 'Exo3',
-                ),
-                BottomNavigationBarItem(
                   icon: Icon(Icons.four_k),
                   label: 'Exo4',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.five_k),
+                  label: 'Exo5',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.five_k),
