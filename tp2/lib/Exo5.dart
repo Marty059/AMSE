@@ -28,10 +28,43 @@ class Exo5 extends StatefulWidget {
   _Exo5State createState() => _Exo5State();
 }
 
-Tile tile =
-    new Tile(imageURL: 'https://picsum.photos/512', alignment: Alignment(0, 0));
+Tile tile = new Tile(
+    imageURL: 'https://picsum.photos/1024', alignment: Alignment(0, 0));
 
 class _Exo5State extends State<Exo5> {
+  int gridRowCount = 5; // Nombre de lignes de la grille
+  int gridColumnCount = 5; // Nombre de colonnes de la grille
+
+  List<Tile> generateTiles() {
+    List<Tile> tiles = [];
+    int totalTiles = gridRowCount * gridColumnCount;
+
+    for (int i = 0; i < totalTiles; i++) {
+      tiles.add(Tile(
+        imageURL: 'https://picsum.photos/1024',
+        alignment: calculateAlignment(i),
+      ));
+    }
+
+    return tiles;
+  }
+
+  Alignment calculateAlignment(int index) {
+    int row = index ~/
+        gridColumnCount; // Division entière pour obtenir le numéro de ligne
+    int column =
+        index % gridColumnCount; // Modulo pour obtenir le numéro de colonne
+
+    double horizontalAlignment = (column / (gridColumnCount - 1)) * 2 -
+        1; // Calcul de l'alignement horizontal
+    double verticalAlignment =
+        (row / (gridRowCount - 1)) * 2 - 1; // Calcul de l'alignement vertical
+    print("case numero : $index");
+    print(horizontalAlignment);
+    print(verticalAlignment);
+    return Alignment(horizontalAlignment, verticalAlignment);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,54 +84,10 @@ class _Exo5State extends State<Exo5> {
           child: GridView.count(
             mainAxisSpacing: 20.0,
             crossAxisSpacing: 20.0,
-            crossAxisCount: 3,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[100],
-                child: const Text("1"),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[100],
-                child: const Text("2"),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[100],
-                child: const Text("3"),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[100],
-                child: const Text("4"),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[100],
-                child: const Text("5"),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[100],
-                child: const Text("6"),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[100],
-                child: const Text("7"),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[100],
-                child: const Text("8"),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[100],
-                child: const Text("9"),
-              ),
-            ],
+            crossAxisCount: gridColumnCount,
+            children: generateTiles().map((tile) {
+              return tile.croppedImageTile();
+            }).toList(),
           ),
         ),
       ],
