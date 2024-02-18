@@ -1,6 +1,5 @@
 import 'dart:typed_data';
-
-import 'dart:ui' as ui;
+import 'dart:ui' as ui; // Import nécessaire pour PictureRecorder
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -27,8 +26,9 @@ class TaquinGame extends StatefulWidget {
 }
 
 class _TaquinGameState extends State<TaquinGame> {
-  int gridSize = 4;
-  late ui.Image image;
+  int gridSize = 2;
+  late ui.Image image; // Marquer image comme 'late'
+  bool isImageLoaded = false; // Indicateur pour vérifier si l'image est chargée
 
   @override
   void initState() {
@@ -43,66 +43,77 @@ class _TaquinGameState extends State<TaquinGame> {
     final ui.FrameInfo frameInfo = await codec.getNextFrame();
     setState(() {
       image = frameInfo.image;
+      isImageLoaded =
+          true; // Mettre à jour l'indicateur pour signaler que l'image est chargée
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> tiles = [];
-    double tileSize = MediaQuery.of(context).size.width / gridSize;
+    if (!isImageLoaded) {
+      // Si l'image n'est pas encore chargée, affichez un indicateur de chargement ou un écran vide.
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else {
+      List<Widget> tiles = [];
+      double tileSize = MediaQuery.of(context).size.width / gridSize;
 
-    for (int y = 0; y < gridSize; y++) {
-      for (int x = 0; x < gridSize; x++) {
-        Rect tileRect = Rect.fromLTWH(
-          x * tileSize,
-          y * tileSize,
-          tileSize,
-          tileSize,
-        );
-        tiles.add(ClipRect(
-          child: OverflowBox(
-            maxWidth: double.infinity,
-            maxHeight: double.infinity,
-            child: Image.memory(
-              extractTile(tileRect),
-              fit: BoxFit.fill,
+      for (int y = 0; y < gridSize; y++) {
+        for (int x = 0; x < gridSize; x++) {
+          Rect tileRect = Rect.fromLTWH(
+            x * tileSize,
+            y * tileSize,
+            tileSize,
+            tileSize,
+          );
+          tiles.add(ClipRect(
+            child: OverflowBox(
+              maxWidth: double.infinity,
+              maxHeight: double.infinity,
+              child: Image.memory(
+                extractTile(tileRect),
+                fit: BoxFit.fill,
+              ),
             ),
-          ),
-        ));
+          ));
+        }
       }
-    }
 
-    return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: GridView.count(
-              crossAxisCount: gridSize,
-              children: tiles,
+      return Scaffold(
+        body: Column(
+          children: [
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: gridSize,
+                children: tiles,
+              ),
             ),
-          ),
-          Slider(
-            value: gridSize.toDouble(),
-            min: 2,
-            max: 5,
-            divisions: 3,
-            label: gridSize.toString(),
-            onChanged: (double value) {
-              setState(() {
-                gridSize = value.toInt();
-              });
-            },
-          ),
-        ],
-      ),
-    );
+            Slider(
+              value: gridSize.toDouble(),
+              min: 2,
+              max: 5,
+              divisions: 3,
+              label: gridSize.toString(),
+              onChanged: (double value) {
+                setState(() {
+                  gridSize = value.toInt();
+                });
+              },
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   Uint8List extractTile(Rect rect) {
     ui.PictureRecorder recorder = ui.PictureRecorder();
     Canvas canvas = Canvas(recorder, rect);
     Rect imageRect =
-        Offset.zero & Size(image.width!.toDouble(), image.height!.toDouble());
+        Offset.zero & Size(image.width.toDouble(), image.height.toDouble());
     Rect destRect = Offset.zero & rect.size;
     canvas.drawImageRect(image, imageRect, destRect, Paint());
     ui.Picture picture = recorder.endRecording();
