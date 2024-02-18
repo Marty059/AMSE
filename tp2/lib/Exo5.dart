@@ -34,55 +34,72 @@ Tile tile =
 class _Exo5State extends State<Exo5> {
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      mainAxisSpacing: 20.0,
-      crossAxisSpacing: 20.0,
-      crossAxisCount: 3,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          color: Colors.teal[100],
-          child: const Text("1"),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            "Cropped Image",
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          color: Colors.teal[100],
-          child: const Text("2"),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          color: Colors.teal[100],
-          child: const Text("3"),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          color: Colors.teal[100],
-          child: const Text("4"),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          color: Colors.teal[100],
-          child: const Text("5"),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          color: Colors.teal[100],
-          child: const Text("6"),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          color: Colors.teal[100],
-          child: const Text("7"),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          color: Colors.teal[100],
-          child: const Text("8"),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          color: Colors.teal[100],
-          child: const Text("9"),
+        Expanded(
+          child: GridView.count(
+            mainAxisSpacing: 20.0,
+            crossAxisSpacing: 20.0,
+            crossAxisCount: 3,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                color: Colors.teal[100],
+                child: const Text("1"),
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                color: Colors.teal[100],
+                child: const Text("2"),
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                color: Colors.teal[100],
+                child: const Text("3"),
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                color: Colors.teal[100],
+                child: const Text("4"),
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                color: Colors.teal[100],
+                child: const Text("5"),
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                color: Colors.teal[100],
+                child: const Text("6"),
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                color: Colors.teal[100],
+                child: const Text("7"),
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                color: Colors.teal[100],
+                child: const Text("8"),
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                color: Colors.teal[100],
+                child: const Text("9"),
+              ),
+            ],
+          ),
         ),
       ],
     );
