@@ -69,9 +69,6 @@ class _MyHomePageState extends State<MyHomePage> {
       case 5:
         page = Placeholder();
         break;
-      case 6:
-        page = Placeholder();
-        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -105,10 +102,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.six_k),
                   label: 'Exo6',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.seven_k),
-                  label: 'Exo7',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.local_convenience_store_sharp),
