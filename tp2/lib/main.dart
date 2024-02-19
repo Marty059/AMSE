@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = Exo5();
         break;
       case 4:
-        page = Exo5_copy();
+        page = Placeholder();
         break;
       case 5:
         page = Placeholder();

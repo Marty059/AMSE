@@ -32,8 +32,8 @@ Tile tile = new Tile(
     imageURL: 'https://picsum.photos/1024', alignment: Alignment(0, 0));
 
 class _Exo5State extends State<Exo5> {
-  int gridRowCount = 5; // Nombre de lignes de la grille
-  int gridColumnCount = 5; // Nombre de colonnes de la grille
+  int gridRowCount = 4; // Nombre de lignes de la grille
+  int gridColumnCount = 4; // Nombre de colonnes de la grille
 
   List<Tile> generateTiles() {
     List<Tile> tiles = [];
