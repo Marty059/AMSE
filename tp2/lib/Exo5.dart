@@ -60,9 +60,6 @@ class _Exo5State extends State<Exo5> {
             1; // Calcul de l'alignement horizontal
     double verticalAlignment = (row / (_currentSliderValueGridCount - 1)) * 2 -
         1; // Calcul de l'alignement vertical
-    print("case numero : $index");
-    print(horizontalAlignment);
-    print(verticalAlignment);
     return Alignment(horizontalAlignment, verticalAlignment);
   }
 
