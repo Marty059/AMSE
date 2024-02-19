@@ -47,7 +47,7 @@ class Exo6 extends StatefulWidget {
 class Exo6State extends State<Exo6> {
   // Liste des tuiles
   List<Widget> tiles = List<Widget>.generate(
-      9, (index) => TileWidget(Tile.randomColor())); // 9 tuiles
+      15, (index) => TileWidget(Tile.randomColor())); // 9 tuiles
 
   @override
   Widget build(BuildContext context) {
@@ -57,13 +57,13 @@ class Exo6State extends State<Exo6> {
         centerTitle: true,
       ),
       body: GridView.count(
-        crossAxisCount: 3,
+        crossAxisCount: 4,
         children: tiles,
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.sentiment_very_satisfied),
         onPressed: () {
-          swapTiles(2, 3); // Exemple: échanger les tuiles 2 et 3
+          swapTiles(2, 3); // Exemple: échanger les tuiles 5 et 6
         },
       ),
     );
