@@ -70,6 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 5:
         page = Exo6_bis();
         break;
+      case 6:
+        page = Placeholder();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
