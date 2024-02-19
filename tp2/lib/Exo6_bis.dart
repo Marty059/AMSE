@@ -6,12 +6,12 @@ math.Random random = new math.Random();
 
 class Tile {
   late Color color;
+  late String text;
 
-  Tile(this.color);
-  Tile.randomColor() {
-    this.color = Color.fromARGB(
-        255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
-  }
+  Tile(this.color, this.text);
+  Tile.randomColor(int index)
+      : color = index == 0 ? Colors.white : Colors.grey,
+        text = index == 0 ? 'empty$index' : 'tile$index';
 }
 
 // Widget de tuile
@@ -22,14 +22,17 @@ class TileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return coloredBox();
+    return coloredBox(tile.text, tile.color);
   }
 
-  Widget coloredBox() {
+  Widget coloredBox(String text, Color color) {
     return Container(
-      color: tile.color,
-      child: Padding(
-        padding: EdgeInsets.all(70.0),
+      color: color,
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 20.0),
+        ),
       ),
     );
   }
@@ -47,7 +50,7 @@ class Exo6_bis extends StatefulWidget {
 class Exo6_bisState extends State<Exo6_bis> {
   // Liste des tuiles
   List<Widget> tiles = List<Widget>.generate(
-      9, (index) => TileWidget(Tile.randomColor())); // 9 tuiles
+      9, (index) => TileWidget(Tile.randomColor(index))); // 9 tuiles
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +61,8 @@ class Exo6_bisState extends State<Exo6_bis> {
       ),
       body: GridView.count(
         crossAxisCount: 3,
+        mainAxisSpacing: 8.0, // Espacement vertical entre les tuiles
+        crossAxisSpacing: 8.0, // Espacement horizontal entre les tuiles
         children: tiles,
       ),
       floatingActionButton: FloatingActionButton(
