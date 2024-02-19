@@ -6,15 +6,15 @@ class Tile {
 
   Tile({required this.imageURL, required this.alignment});
 
-  Widget croppedImageTile() {
+  Widget croppedImageTile(double taille) {
     return FittedBox(
       fit: BoxFit.fill,
       child: ClipRect(
         child: Container(
           child: Align(
             alignment: this.alignment,
-            widthFactor: 0.3,
-            heightFactor: 0.3,
+            widthFactor: taille,
+            heightFactor: taille,
             child: Image.network(this.imageURL),
           ),
         ),
@@ -32,12 +32,12 @@ Tile tile = new Tile(
     imageURL: 'https://picsum.photos/1024', alignment: Alignment(0, 0));
 
 class _Exo5State extends State<Exo5> {
-  int gridRowCount = 4; // Nombre de lignes de la grille
-  int gridColumnCount = 4; // Nombre de colonnes de la grille
+  int _currentSliderValueGridCount = 2;
 
   List<Tile> generateTiles() {
     List<Tile> tiles = [];
-    int totalTiles = gridRowCount * gridColumnCount;
+    int totalTiles =
+        _currentSliderValueGridCount * _currentSliderValueGridCount;
 
     for (int i = 0; i < totalTiles; i++) {
       tiles.add(Tile(
@@ -51,14 +51,15 @@ class _Exo5State extends State<Exo5> {
 
   Alignment calculateAlignment(int index) {
     int row = index ~/
-        gridColumnCount; // Division entière pour obtenir le numéro de ligne
-    int column =
-        index % gridColumnCount; // Modulo pour obtenir le numéro de colonne
+        _currentSliderValueGridCount; // Division entière pour obtenir le numéro de ligne
+    int column = index %
+        _currentSliderValueGridCount; // Modulo pour obtenir le numéro de colonne
 
-    double horizontalAlignment = (column / (gridColumnCount - 1)) * 2 -
-        1; // Calcul de l'alignement horizontal
-    double verticalAlignment =
-        (row / (gridRowCount - 1)) * 2 - 1; // Calcul de l'alignement vertical
+    double horizontalAlignment =
+        (column / (_currentSliderValueGridCount - 1)) * 2 -
+            1; // Calcul de l'alignement horizontal
+    double verticalAlignment = (row / (_currentSliderValueGridCount - 1)) * 2 -
+        1; // Calcul de l'alignement vertical
     print("case numero : $index");
     print(horizontalAlignment);
     print(verticalAlignment);
@@ -82,13 +83,25 @@ class _Exo5State extends State<Exo5> {
         ),
         Expanded(
           child: GridView.count(
-            mainAxisSpacing: 20.0,
-            crossAxisSpacing: 20.0,
-            crossAxisCount: gridColumnCount,
+            mainAxisSpacing: 2,
+            crossAxisSpacing: 2,
+            crossAxisCount: _currentSliderValueGridCount,
             children: generateTiles().map((tile) {
-              return tile.croppedImageTile();
+              return createTileWidgetFrom(tile);
             }).toList(),
           ),
+        ),
+        Slider(
+          value: _currentSliderValueGridCount.toDouble(),
+          min: 2,
+          max: 8,
+          onChanged: (double value) {
+            setState(() {
+              _currentSliderValueGridCount = value.toInt();
+            });
+          },
+          divisions: 6,
+          label: "$_currentSliderValueGridCount",
         ),
       ],
     );
@@ -96,7 +109,7 @@ class _Exo5State extends State<Exo5> {
 
   Widget createTileWidgetFrom(Tile tile) {
     return InkWell(
-      child: tile.croppedImageTile(),
+      child: tile.croppedImageTile(1 / _currentSliderValueGridCount),
       onTap: () {
         print("tapped on tile");
       },
