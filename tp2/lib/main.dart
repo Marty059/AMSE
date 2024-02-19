@@ -102,11 +102,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: 'Exo5',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.five_k_plus),
+                  icon: Icon(Icons.six_k_plus),
                   label: 'Exo5_copy',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.six_k),
+                  icon: Icon(Icons.seven_k),
                   label: 'Exo6',
                 ),
                 BottomNavigationBarItem(
