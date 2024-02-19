@@ -6,12 +6,12 @@ math.Random random = new math.Random();
 
 class Tile {
   late Color color;
+  late String text;
 
-  Tile(this.color);
-  Tile.randomColor() {
-    this.color = Color.fromARGB(
-        255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
-  }
+  Tile(this.color, this.text);
+  Tile.randomColor(int index)
+      : color = index == 0 ? Colors.white : Colors.grey,
+        text = index == 0 ? 'empty$index' : 'tile$index';
 }
 
 // Widget de tuile
@@ -22,32 +22,35 @@ class TileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return coloredBox();
+    return coloredBox(tile.text, tile.color);
   }
 
-  Widget coloredBox() {
+  Widget coloredBox(String text, Color color) {
     return Container(
-      color: tile.color,
-      child: Padding(
-        padding: EdgeInsets.all(70.0),
+      color: color,
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 20.0),
+        ),
       ),
     );
   }
 }
 
-void main() => runApp(MaterialApp(home: Exo6()));
+void main() => runApp(MaterialApp(home: Exo6_bis()));
 
 // Widget principal pour afficher les tuiles
-class Exo6 extends StatefulWidget {
+class Exo6_bis extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => Exo6State();
+  State<StatefulWidget> createState() => Exo6_bisState();
 }
 
 // État du widget principal
-class Exo6State extends State<Exo6> {
+class Exo6_bisState extends State<Exo6_bis> {
   // Liste des tuiles
   List<Widget> tiles = List<Widget>.generate(
-      16, (index) => TileWidget(Tile.randomColor())); // 9 tuiles
+      9, (index) => TileWidget(Tile.randomColor(index))); // 9 tuiles
 
   @override
   Widget build(BuildContext context) {
@@ -57,13 +60,15 @@ class Exo6State extends State<Exo6> {
         centerTitle: true,
       ),
       body: GridView.count(
-        crossAxisCount: 4,
+        crossAxisCount: 3,
+        mainAxisSpacing: 8.0, // Espacement vertical entre les tuiles
+        crossAxisSpacing: 8.0, // Espacement horizontal entre les tuiles
         children: tiles,
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.sentiment_very_satisfied),
         onPressed: () {
-          swapTiles(2, 3); // Exemple: échanger les tuiles 5 et 6
+          swapTiles(2, 3); // Exemple: échanger les tuiles 2 et 3
         },
       ),
     );
