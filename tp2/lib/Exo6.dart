@@ -47,7 +47,7 @@ class Exo6 extends StatefulWidget {
 class Exo6State extends State<Exo6> {
   // Liste des tuiles
   List<Widget> tiles = List<Widget>.generate(
-      15, (index) => TileWidget(Tile.randomColor())); // 9 tuiles
+      16, (index) => TileWidget(Tile.randomColor())); // 9 tuiles
 
   @override
   Widget build(BuildContext context) {
