@@ -5,6 +5,7 @@ import 'package:tp2/Exo2.dart';
 import 'package:tp2/Exo4.dart';
 
 import 'package:tp2/Exo5.dart';
+import 'package:tp2/Exo6.dart';
 
 void main() {
   runApp(MyApp());
@@ -63,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = Exo5();
         break;
       case 4:
-        page = Placeholder();
+        page = Exo6();
         break;
       case 5:
         page = Placeholder();
@@ -102,12 +103,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: 'Exo5',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.six_k_plus),
-                  label: 'Exo5_copy',
+                  icon: Icon(Icons.six_k),
+                  label: 'Exo6',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.seven_k),
-                  label: 'Exo6',
+                  label: 'Exo7',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.local_convenience_store_sharp),
