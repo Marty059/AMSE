@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-// ==============
-// Models
-// ==============
-
+// Modèle de tuile
 math.Random random = new math.Random();
 
 class Tile {
@@ -17,10 +14,7 @@ class Tile {
   }
 }
 
-// ==============
-// Widgets
-// ==============
-
+// Widget de tuile
 class TileWidget extends StatelessWidget {
   final Tile tile;
 
@@ -28,28 +22,32 @@ class TileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return this.coloredBox();
+    return coloredBox();
   }
 
   Widget coloredBox() {
     return Container(
-        color: tile.color,
-        child: Padding(
-          padding: EdgeInsets.all(70.0),
-        ));
+      color: tile.color,
+      child: Padding(
+        padding: EdgeInsets.all(70.0),
+      ),
+    );
   }
 }
 
-void main() => runApp(new MaterialApp(home: Exo6()));
+void main() => runApp(MaterialApp(home: Exo6()));
 
+// Widget principal pour afficher les tuiles
 class Exo6 extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => Exo6State();
 }
 
+// État du widget principal
 class Exo6State extends State<Exo6> {
-  List<Widget> tiles =
-      List<Widget>.generate(2, (index) => TileWidget(Tile.randomColor()));
+  // Liste des tuiles
+  List<Widget> tiles = List<Widget>.generate(
+      9, (index) => TileWidget(Tile.randomColor())); // 9 tuiles
 
   @override
   Widget build(BuildContext context) {
@@ -58,15 +56,33 @@ class Exo6State extends State<Exo6> {
         title: Text('Moving Tiles'),
         centerTitle: true,
       ),
-      body: Row(children: tiles),
+      body: GridView.count(
+        crossAxisCount: 3,
+        children: tiles,
+      ),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.sentiment_very_satisfied), onPressed: swapTiles),
+        child: Icon(Icons.sentiment_very_satisfied),
+        onPressed: () {
+          swapTiles(2, 3); // Exemple: échanger les tuiles 5 et 6
+        },
+      ),
     );
   }
 
-  swapTiles() {
+  void swapTiles(int index1, int index2) {
     setState(() {
-      tiles.insert(1, tiles.removeAt(0));
+      if (index1 >= 0 &&
+          index1 < tiles.length &&
+          index2 >= 0 &&
+          index2 < tiles.length &&
+          index1 != index2) {
+        final temp = tiles[index1];
+        tiles[index1] = tiles[index2];
+        tiles[index2] = temp;
+
+        // Mettre à jour l'état avec la nouvelle liste réorganisée
+        tiles = List.from(tiles);
+      }
     });
   }
 }
