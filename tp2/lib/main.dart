@@ -6,6 +6,7 @@ import 'package:tp2/Exo4.dart';
 
 import 'package:tp2/Exo5.dart';
 import 'package:tp2/Exo6.dart';
+import 'package:tp2/Exo6_bis.dart';
 
 void main() {
   runApp(MyApp());
@@ -67,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = Exo6();
         break;
       case 5:
-        page = Placeholder();
+        page = Exo6_bis();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -102,6 +103,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.six_k),
                   label: 'Exo6',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.bike_scooter),
+                  label: 'Exo6_bis',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.local_convenience_store_sharp),

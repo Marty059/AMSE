@@ -35,16 +35,16 @@ class TileWidget extends StatelessWidget {
   }
 }
 
-void main() => runApp(MaterialApp(home: Exo6()));
+void main() => runApp(MaterialApp(home: Exo6_bis()));
 
 // Widget principal pour afficher les tuiles
-class Exo6 extends StatefulWidget {
+class Exo6_bis extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => Exo6State();
+  State<StatefulWidget> createState() => Exo6_bisState();
 }
 
 // État du widget principal
-class Exo6State extends State<Exo6> {
+class Exo6_bisState extends State<Exo6_bis> {
   // Liste des tuiles
   List<Widget> tiles = List<Widget>.generate(
       9, (index) => TileWidget(Tile.randomColor())); // 9 tuiles
