@@ -4,15 +4,15 @@ import 'dart:math';
 class Tile {
   String imageURL;
   Alignment alignment;
-  int index; // Nouveau champ pour conserver l'index de la tuile dans la grille
-  int position;
+  int position_initiale; // Nouveau champ pour conserver l'position_initiale de la tuile dans la grille
+  int position_actuelle;
   bool vide;
 
   Tile(
       {required this.imageURL,
       required this.alignment,
-      required this.index,
-      required this.position,
+      required this.position_initiale,
+      required this.position_actuelle,
       required this.vide});
 
   Widget croppedImageTile(double taille) {
@@ -38,8 +38,8 @@ class Exo6_ter extends StatefulWidget {
 }
 
 class _Exo6_terState extends State<Exo6_ter> {
-  int _currentSliderValueGridCount =
-      2; // Changer la taille de la grille pour un jeu de taquin 3x3
+  int taille_grille =
+      3; // Changer la taille de la grille pour un jeu de taquin 3x3
 
   List<Tile> tiles = []; // Liste des tuiles
   int emptyIndex = 0;
@@ -53,57 +53,55 @@ class _Exo6_terState extends State<Exo6_ter> {
 
   List<Tile> generateTiles() {
     List<Tile> tiles = [];
-    int totalTiles =
-        _currentSliderValueGridCount * _currentSliderValueGridCount;
+    int totalTiles = taille_grille * taille_grille;
 
     for (int i = 0; i < totalTiles; i++) {
       tiles.add(Tile(
         imageURL: 'https://picsum.photos/1024',
         alignment: calculateAlignment(i),
-        index: i,
-        position: i,
+        position_initiale: i,
+        position_actuelle: i,
         vide: false,
       ));
     }
+    tiles[totalTiles - 1].vide = true;
 
-    // Initialiser l'index de la tuile vide (dans cet exemple, la dernière tuile)
+    // Initialiser l'position_initiale de la tuile vide (dans cet exemple, la dernière tuile)
     emptyIndex = totalTiles - 1;
     emptyIndexposition = emptyIndex;
 
     return tiles;
   }
 
-  Alignment calculateAlignment(int index) {
-    int row = index ~/
-        _currentSliderValueGridCount; // Division entière pour obtenir le numéro de ligne
-    int column = index %
-        _currentSliderValueGridCount; // Modulo pour obtenir le numéro de colonne
+  Alignment calculateAlignment(int position_initiale) {
+    int row = position_initiale ~/
+        taille_grille; // Division entière pour obtenir le numéro de ligne
+    int column = position_initiale %
+        taille_grille; // Modulo pour obtenir le numéro de colonne
 
-    double horizontalAlignment =
-        (column / (_currentSliderValueGridCount - 1)) * 2 -
-            1; // Calcul de l'alignement horizontal
-    double verticalAlignment = (row / (_currentSliderValueGridCount - 1)) * 2 -
-        1; // Calcul de l'alignement vertical
+    double horizontalAlignment = (column / (taille_grille - 1)) * 2 -
+        1; // Calcul de l'alignement horizontal
+    double verticalAlignment =
+        (row / (taille_grille - 1)) * 2 - 1; // Calcul de l'alignement vertical
     return Alignment(horizontalAlignment, verticalAlignment);
   }
 
-  void moveTile(int index) {
-    int position = positionOfIndex(index);
+  void moveTile(int position_initiale) {
     // Vérifiez si la tuile sélectionnée peut être déplacée
-    if (!isValidMove(position)) {
+    if (!isValidMove(position_initiale)) {
       return;
     }
 
     // Permutez la tuile sélectionnée avec la tuile vide
     setState(() {
-      Tile temp = tiles[index];
-      tiles[index] = tiles[emptyIndex];
+      Tile temp = tiles[position_initiale];
+      tiles[position_initiale] = tiles[emptyIndex];
       tiles[emptyIndex] = temp;
 
-      emptyIndex = index;
+      emptyIndex = position_initiale;
       for (int i = 0; i < tiles.length; i++) {
-        if (tiles[i].index == tiles.length - 1) {
-          emptyIndexposition = tiles[i].position;
+        if (tiles[i].position_initiale == tiles.length - 1) {
+          emptyIndexposition = tiles[i].position_actuelle;
           break;
         }
       }
@@ -131,11 +129,11 @@ class _Exo6_terState extends State<Exo6_ter> {
     }
   }
 
-  bool isValidMove(int position) {
-    int emptyRow = emptyIndexposition ~/ _currentSliderValueGridCount;
-    int emptyColumn = emptyIndexposition % _currentSliderValueGridCount;
-    int targetRow = position ~/ _currentSliderValueGridCount;
-    int targetColumn = position % _currentSliderValueGridCount;
+  bool isValidMove(int position_actuelle) {
+    int emptyRow = emptyIndexposition ~/ taille_grille;
+    int emptyColumn = emptyIndexposition % taille_grille;
+    int targetRow = position_actuelle ~/ taille_grille;
+    int targetColumn = position_actuelle % taille_grille;
 
     return (emptyRow == targetRow &&
             (emptyColumn - 1 == targetColumn ||
@@ -145,38 +143,39 @@ class _Exo6_terState extends State<Exo6_ter> {
   }
 
   bool isSolved() {
-    // Vérifiez si les indices des tuiles correspondent à leur position dans l'image originale
+    // Vérifiez si les indices des tuiles correspondent à leur position_actuelle dans l'image originale
     for (int i = 0; i < tiles.length; i++) {
-      if (tiles[i].index != i) {
+      if (tiles[i].position_initiale != i) {
         return false;
       }
     }
     return true;
   }
 
-  int positionOfIndex(int index) {
+  int positionActuelleOfPositionInitiale(int position_initiale) {
     int temp = 0;
     for (int i = 0; i < tiles.length; i++) {
-      if (tiles[i].index == index) {
-        temp = tiles[i].position;
+      if (tiles[i].position_initiale == position_initiale) {
+        temp = tiles[i].position_actuelle;
       }
     }
     return temp;
   }
 
-  void checkPosition() {
-    //changer toutes les positions
-    for (int i = 0; i < tiles.length; i++) {
-      tiles[i].position = i;
-    }
-
-    // Trouvez la nouvelle position de la tuile vide
-    for (int i = 0; i < tiles.length; i++) {
-      if (tiles[i].index == tiles.length - 1) {
-        emptyIndexposition = tiles[i].position;
-        break;
+  void checkPositionTileVide() {
+    setState(() {
+      for (int i = 0; i < tiles.length; i++) {
+        tiles[i].position_actuelle = i;
       }
-    }
+
+      // Trouvez la nouvelle position_actuelle de la tuile vide
+      for (int i = 0; i < tiles.length; i++) {
+        if (tiles[i].vide) {
+          emptyIndexposition = tiles[i].position_actuelle;
+          break;
+        }
+      }
+    });
   }
 
   void shuffleTiles() {
@@ -191,7 +190,7 @@ class _Exo6_terState extends State<Exo6_ter> {
         tiles[j] = temp;
       }
 
-      checkPosition();
+      checkPositionTileVide();
     });
   }
 
@@ -205,7 +204,7 @@ class _Exo6_terState extends State<Exo6_ter> {
           child: GridView.count(
             mainAxisSpacing: 2,
             crossAxisSpacing: 2,
-            crossAxisCount: _currentSliderValueGridCount,
+            crossAxisCount: taille_grille,
             children: tiles.map((tile) {
               return createTileWidgetFrom(tile);
             }).toList(),
@@ -224,35 +223,39 @@ class _Exo6_terState extends State<Exo6_ter> {
   }
 
   Widget createTileWidgetFrom(Tile tile) {
-    if (tile.index == emptyIndex) {
+    if (tile.vide) {
       return Opacity(
           opacity: 0.2,
           child: InkWell(
-            child: tile.croppedImageTile(1 / _currentSliderValueGridCount),
+            child: tile.croppedImageTile(1 / taille_grille),
             onTap: () {
-              checkPosition();
+              checkPositionTileVide();
               // Gérez ici les interactions de déplacement de la tuile
               // (implémentation requise)
-              moveTile(tile.index);
-              /*print("position initale: " + tile.index.toString());
-              print("position actuelle :" + tile.position.toString());
-              print("position initale vide :" + emptyIndex.toString());
-              print("position actuelle vide :" + emptyIndexposition.toString());
-              print("====");*/
+              moveTile(tile.position_actuelle);
+              print("position_actuelle initale: " +
+                  tile.position_initiale.toString());
+              print("position_actuelle actuelle :" +
+                  tile.position_actuelle.toString());
+              print("position_actuelle initale vide :" + emptyIndex.toString());
+              print("position_actuelle actuelle vide :" +
+                  emptyIndexposition.toString());
+              print("====");
             },
           ));
     } else {
       // Sinon, affichez la tuile d'image normale
       return InkWell(
-        child: tile.croppedImageTile(1 / _currentSliderValueGridCount),
+        child: tile.croppedImageTile(1 / taille_grille),
         onTap: () {
-          checkPosition();
+          checkPositionTileVide();
           // Gérez ici les interactions de déplacement de la tuile
           // (implémentation requise)
-          moveTile(tile.index);
-          /*print("position initiale: " + tile.index.toString());
-          print("position :" + tile.position.toString());
-          print("====");*/
+          moveTile(tile.position_actuelle);
+          print("position_actuelle initiale: " +
+              tile.position_initiale.toString());
+          print("position_actuelle :" + tile.position_actuelle.toString());
+          print("====");
         },
       );
     }
