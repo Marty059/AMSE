@@ -88,7 +88,12 @@ class _Exo6_terState extends State<Exo6_ter> {
 
   void moveTile(int position_initiale) {
     // Vérifiez si la tuile sélectionnée peut être déplacée
-    if (!isValidMove(position_initiale)) {
+
+    emptyIndex = position_initiale_vide();
+    int position_actuelle =
+        positionActuelleOfPositionInitiale(position_initiale);
+
+    if (!isValidMove(position_actuelle)) {
       return;
     }
 
@@ -98,13 +103,9 @@ class _Exo6_terState extends State<Exo6_ter> {
       tiles[position_initiale] = tiles[emptyIndex];
       tiles[emptyIndex] = temp;
 
-      emptyIndex = position_initiale;
-      for (int i = 0; i < tiles.length; i++) {
-        if (tiles[i].position_initiale == tiles.length - 1) {
-          emptyIndexposition = tiles[i].position_actuelle;
-          break;
-        }
-      }
+      emptyIndexposition = position_actuelle;
+      checkPosition();
+      checkVide();
     });
 
     // Vérifiez si le puzzle est résolu après le mouvement
@@ -162,20 +163,33 @@ class _Exo6_terState extends State<Exo6_ter> {
     return temp;
   }
 
-  void checkPositionTileVide() {
+  void checkVide() {
+    setState(() {
+      for (int i = 0; i < tiles.length; i++) {
+        if (tiles[i].vide) {
+          emptyIndexposition = i;
+          emptyIndex = tiles[i].position_initiale;
+        }
+      }
+    });
+  }
+
+  void checkPosition() {
     setState(() {
       for (int i = 0; i < tiles.length; i++) {
         tiles[i].position_actuelle = i;
       }
-
-      // Trouvez la nouvelle position_actuelle de la tuile vide
-      for (int i = 0; i < tiles.length; i++) {
-        if (tiles[i].vide) {
-          emptyIndexposition = tiles[i].position_actuelle;
-          break;
-        }
-      }
     });
+  }
+
+  int position_initiale_vide() {
+    int temp = 0;
+    for (int i = 0; i < tiles.length; i++) {
+      if (tiles[i].vide) {
+        temp = tiles[i].position_initiale;
+      }
+    }
+    return temp;
   }
 
   void shuffleTiles() {
@@ -188,9 +202,8 @@ class _Exo6_terState extends State<Exo6_ter> {
         tiles[i] = tiles[j];
 
         tiles[j] = temp;
+        checkVide();
       }
-
-      checkPositionTileVide();
     });
   }
 
@@ -229,11 +242,9 @@ class _Exo6_terState extends State<Exo6_ter> {
           child: InkWell(
             child: tile.croppedImageTile(1 / taille_grille),
             onTap: () {
-              checkPositionTileVide();
-              // Gérez ici les interactions de déplacement de la tuile
-              // (implémentation requise)
-              moveTile(tile.position_actuelle);
-              print("position_actuelle initale: " +
+              checkVide();
+
+              print("position_actuelle initiale: " +
                   tile.position_initiale.toString());
               print("position_actuelle actuelle :" +
                   tile.position_actuelle.toString());
@@ -248,10 +259,10 @@ class _Exo6_terState extends State<Exo6_ter> {
       return InkWell(
         child: tile.croppedImageTile(1 / taille_grille),
         onTap: () {
-          checkPositionTileVide();
+          checkVide();
           // Gérez ici les interactions de déplacement de la tuile
           // (implémentation requise)
-          moveTile(tile.position_actuelle);
+          moveTile(tile.position_initiale);
           print("position_actuelle initiale: " +
               tile.position_initiale.toString());
           print("position_actuelle :" + tile.position_actuelle.toString());
