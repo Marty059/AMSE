@@ -186,13 +186,21 @@ class _Exo6_terState extends State<Exo6_ter> {
   }
 
   Widget createTileWidgetFrom(Tile tile) {
-    return InkWell(
-      child: tile.croppedImageTile(1 / _currentSliderValueGridCount),
-      onTap: () {
-        // Gérez ici les interactions de déplacement de la tuile
-        // (implémentation requise)
-        moveTile(tile.index);
-      },
-    );
+    if (tile.index == emptyIndex) {
+      // Si c'est la tuile vide, affichez un conteneur avec une couleur de fond semi-transparente
+      return Container(
+        color: Colors.grey.withOpacity(0.5), // Opacité de 50%
+      );
+    } else {
+      // Sinon, affichez la tuile d'image normale
+      return InkWell(
+        child: tile.croppedImageTile(1 / _currentSliderValueGridCount),
+        onTap: () {
+          // Gérez ici les interactions de déplacement de la tuile
+          // (implémentation requise)
+          moveTile(tile.index);
+        },
+      );
+    }
   }
 }
