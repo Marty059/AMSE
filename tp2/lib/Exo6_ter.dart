@@ -4,7 +4,7 @@ import 'dart:math';
 class Tile {
   String imageURL;
   Alignment alignment;
-  int position_initiale; // Nouveau champ pour conserver l'position_initiale de la tuile dans la grille
+  int position_initiale; // Nouveau champ pour conserver la position_initiale de la tuile dans la grille
   int position_actuelle;
   bool vide;
 
@@ -38,12 +38,8 @@ class Exo6_ter extends StatefulWidget {
 }
 
 class _Exo6_terState extends State<Exo6_ter> {
-  int taille_grille =
-      3; // Changer la taille de la grille pour un jeu de taquin 3x3
-
-  List<Tile> tiles = []; // Liste des tuiles
-  int emptyIndex = 0;
-  int emptyIndexposition = 0;
+  int taille_grille = 3;
+  List<Tile> tiles = [];
 
   @override
   void initState() {
@@ -66,52 +62,45 @@ class _Exo6_terState extends State<Exo6_ter> {
     }
     tiles[totalTiles - 1].vide = true;
 
-    // Initialiser l'position_initiale de la tuile vide (dans cet exemple, la dernière tuile)
-    emptyIndex = totalTiles - 1;
-    emptyIndexposition = emptyIndex;
-
     return tiles;
   }
 
   Alignment calculateAlignment(int position_initiale) {
-    int row = position_initiale ~/
-        taille_grille; // Division entière pour obtenir le numéro de ligne
-    int column = position_initiale %
-        taille_grille; // Modulo pour obtenir le numéro de colonne
+    int row = position_initiale ~/ taille_grille; //num ligne
+    int column = position_initiale % taille_grille; // num colonne
 
-    double horizontalAlignment = (column / (taille_grille - 1)) * 2 -
-        1; // Calcul de l'alignement horizontal
-    double verticalAlignment =
-        (row / (taille_grille - 1)) * 2 - 1; // Calcul de l'alignement vertical
+    double horizontalAlignment = (column / (taille_grille - 1)) * 2 - 1;
+    double verticalAlignment = (row / (taille_grille - 1)) * 2 - 1;
     return Alignment(horizontalAlignment, verticalAlignment);
   }
 
-  void moveTile(int position_initiale) {
-    // Vérifiez si la tuile sélectionnée peut être déplacée
+  void moveTile(int position_actuelle) {
+    // if (!isValidMove(position_actuelle)) {
+    //   return;
+    // }
 
-    emptyIndex = position_initiale_vide();
-    int position_actuelle =
-        positionActuelleOfPositionInitiale(position_initiale);
-
-    if (!isValidMove(position_actuelle)) {
-      return;
-    }
-
-    // Permutez la tuile sélectionnée avec la tuile vide
     setState(() {
-      Tile temp = tiles[position_initiale];
-      tiles[position_initiale] = tiles[emptyIndex];
-      tiles[emptyIndex] = temp;
+      int emptyTilePosition = 0;
+      for (int i = 0; i < tiles.length; i++) {
+        if (tiles[i].vide) {
+          emptyTilePosition = i;
+        }
+      }
+      print(emptyTilePosition);
+      print(position_actuelle);
 
-      emptyIndexposition = position_actuelle;
-      checkPosition();
-      checkVide();
+      Tile emptyTile = tiles[emptyTilePosition];
+      Tile tileToSwap = tiles[position_actuelle];
+
+      tiles[position_actuelle] = emptyTile;
+      tiles[emptyTilePosition] = tileToSwap;
+
+      emptyTile.position_actuelle = position_actuelle;
+      tileToSwap.position_actuelle = emptyTilePosition;
     });
 
     // Vérifiez si le puzzle est résolu après le mouvement
     if (isSolved()) {
-      // Gérer le cas où le puzzle est résolu
-      // Par exemple, afficher un message de réussite
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
@@ -131,8 +120,15 @@ class _Exo6_terState extends State<Exo6_ter> {
   }
 
   bool isValidMove(int position_actuelle) {
-    int emptyRow = emptyIndexposition ~/ taille_grille;
-    int emptyColumn = emptyIndexposition % taille_grille;
+    int emptyTilePosition = 0;
+    for (int i = 0; i < tiles.length; i++) {
+      if (tiles[i].vide) {
+        emptyTilePosition = i;
+      }
+    }
+
+    int emptyRow = emptyTilePosition ~/ taille_grille;
+    int emptyColumn = emptyTilePosition % taille_grille;
     int targetRow = position_actuelle ~/ taille_grille;
     int targetColumn = position_actuelle % taille_grille;
 
@@ -153,48 +149,8 @@ class _Exo6_terState extends State<Exo6_ter> {
     return true;
   }
 
-  int positionActuelleOfPositionInitiale(int position_initiale) {
-    int temp = 0;
-    for (int i = 0; i < tiles.length; i++) {
-      if (tiles[i].position_initiale == position_initiale) {
-        temp = tiles[i].position_actuelle;
-      }
-    }
-    return temp;
-  }
-
-  void checkVide() {
-    setState(() {
-      for (int i = 0; i < tiles.length; i++) {
-        if (tiles[i].vide) {
-          emptyIndexposition = i;
-          emptyIndex = tiles[i].position_initiale;
-        }
-      }
-    });
-  }
-
-  void checkPosition() {
-    setState(() {
-      for (int i = 0; i < tiles.length; i++) {
-        tiles[i].position_actuelle = i;
-      }
-    });
-  }
-
-  int position_initiale_vide() {
-    int temp = 0;
-    for (int i = 0; i < tiles.length; i++) {
-      if (tiles[i].vide) {
-        temp = tiles[i].position_initiale;
-      }
-    }
-    return temp;
-  }
-
   void shuffleTiles() {
     setState(() {
-      // Mélangez les tuiles en permutant aléatoirement les tuiles
       for (int i = tiles.length - 1; i > 0; i--) {
         int j = Random().nextInt(i + 1);
         Tile temp = tiles[i];
@@ -202,7 +158,6 @@ class _Exo6_terState extends State<Exo6_ter> {
         tiles[i] = tiles[j];
 
         tiles[j] = temp;
-        checkVide();
       }
     });
   }
@@ -212,7 +167,6 @@ class _Exo6_terState extends State<Exo6_ter> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Affichage du jeu de taquin
         Expanded(
           child: GridView.count(
             mainAxisSpacing: 2,
@@ -223,10 +177,8 @@ class _Exo6_terState extends State<Exo6_ter> {
             }).toList(),
           ),
         ),
-        // Bouton pour mélanger les tuiles (optionnel)
         ElevatedButton(
           onPressed: () {
-            // Mélangez les tuiles (implémentation requise)
             shuffleTiles();
           },
           child: Text('Mélanger'),
@@ -241,32 +193,14 @@ class _Exo6_terState extends State<Exo6_ter> {
           opacity: 0.2,
           child: InkWell(
             child: tile.croppedImageTile(1 / taille_grille),
-            onTap: () {
-              checkVide();
-
-              print("position_actuelle initiale: " +
-                  tile.position_initiale.toString());
-              print("position_actuelle actuelle :" +
-                  tile.position_actuelle.toString());
-              print("position_actuelle initale vide :" + emptyIndex.toString());
-              print("position_actuelle actuelle vide :" +
-                  emptyIndexposition.toString());
-              print("====");
-            },
+            onTap: () {},
           ));
     } else {
       // Sinon, affichez la tuile d'image normale
       return InkWell(
         child: tile.croppedImageTile(1 / taille_grille),
         onTap: () {
-          checkVide();
-          // Gérez ici les interactions de déplacement de la tuile
-          // (implémentation requise)
-          moveTile(tile.position_initiale);
-          print("position_actuelle initiale: " +
-              tile.position_initiale.toString());
-          print("position_actuelle :" + tile.position_actuelle.toString());
-          print("====");
+          moveTile(tile.position_actuelle);
         },
       );
     }
