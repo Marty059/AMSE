@@ -75,9 +75,9 @@ class _Exo6_terState extends State<Exo6_ter> {
   }
 
   void moveTile(int position_actuelle) {
-    // if (!isValidMove(position_actuelle)) {
-    //   return;
-    // }
+    if (!isValidMove(position_actuelle)) {
+      return;
+    }
 
     setState(() {
       int emptyTilePosition = 0;
@@ -86,8 +86,6 @@ class _Exo6_terState extends State<Exo6_ter> {
           emptyTilePosition = i;
         }
       }
-      print(emptyTilePosition);
-      print(position_actuelle);
 
       Tile emptyTile = tiles[emptyTilePosition];
       Tile tileToSwap = tiles[position_actuelle];
@@ -181,7 +179,7 @@ class _Exo6_terState extends State<Exo6_ter> {
           onPressed: () {
             shuffleTiles();
           },
-          child: Text('Mélanger'),
+          child: Text('NE PAS CLIQUER JAMAIS JAMAIS'),
         ),
       ],
     );
