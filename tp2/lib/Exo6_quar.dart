@@ -41,6 +41,7 @@ class _Exo6_quarState extends State<Exo6_quar> {
   int _currentSliderValueGridCount =
       2; // Changer la taille de la grille pour un jeu de taquin 3x3
   String currentImageUrl = 'https://picsum.photos/1024';
+  int deplacement = 0;
 
   List<Tile> tiles = []; // Liste des tuiles
   int emptyIndex = 0;
@@ -108,6 +109,8 @@ class _Exo6_quarState extends State<Exo6_quar> {
           break;
         }
       }
+      deplacement += 1;
+      print(deplacement);
     });
 
     // Vérifiez si le puzzle est résolu après le mouvement
