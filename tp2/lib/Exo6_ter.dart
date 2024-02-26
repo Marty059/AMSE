@@ -90,7 +90,7 @@ class _Exo6_terState extends State<Exo6_ter> {
   void moveTile(int index) {
     int position = positionOfIndex(index);
     // Vérifiez si la tuile sélectionnée peut être déplacée
-    if (!isValidMove(position)) {
+    if (!isValidMove(position_initiale)) {
       return;
     }
 
@@ -100,10 +100,10 @@ class _Exo6_terState extends State<Exo6_ter> {
       tiles[index] = tiles[emptyIndex];
       tiles[emptyIndex] = temp;
 
-      emptyIndex = index;
+      emptyIndex = position_initiale;
       for (int i = 0; i < tiles.length; i++) {
-        if (tiles[i].index == tiles.length - 1) {
-          emptyIndexposition = tiles[i].position;
+        if (tiles[i].position_initiale == tiles.length - 1) {
+          emptyIndexposition = tiles[i].position_actuelle;
           break;
         }
       }
@@ -164,19 +164,38 @@ class _Exo6_terState extends State<Exo6_ter> {
     return temp;
   }
 
-  void checkPosition() {
-    //changer toutes les positions
-    for (int i = 0; i < tiles.length; i++) {
-      tiles[i].position = i;
-    }
+  void checkPositionTileVide() {
+    setState(() {
+      for (int i = 0; i < tiles.length; i++) {
+        tiles[i].position_actuelle = i;
+      }
 
-    // Trouvez la nouvelle position de la tuile vide
+      // Trouvez la nouvelle position_actuelle de la tuile vide
+      for (int i = 0; i < tiles.length; i++) {
+        if (tiles[i].vide) {
+          emptyIndexposition = tiles[i].position_actuelle;
+          break;
+        }
+      }
+    });
+  }
+
+  void checkPosition() {
+    setState(() {
+      for (int i = 0; i < tiles.length; i++) {
+        tiles[i].position_actuelle = i;
+      }
+    });
+  }
+
+  int position_initiale_vide() {
+    int temp = 0;
     for (int i = 0; i < tiles.length; i++) {
-      if (tiles[i].index == tiles.length - 1) {
-        emptyIndexposition = tiles[i].position;
-        break;
+      if (tiles[i].vide) {
+        temp = tiles[i].position_initiale;
       }
     }
+    return temp;
   }
 
   void shuffleTiles() {
@@ -189,9 +208,10 @@ class _Exo6_terState extends State<Exo6_ter> {
         tiles[i] = tiles[j];
 
         tiles[j] = temp;
+        checkVide();
       }
 
-      checkPosition();
+      checkPositionTileVide();
     });
   }
 
@@ -230,15 +250,18 @@ class _Exo6_terState extends State<Exo6_ter> {
           child: InkWell(
             child: tile.croppedImageTile(1 / _currentSliderValueGridCount),
             onTap: () {
-              checkPosition();
+              checkPositionTileVide();
               // Gérez ici les interactions de déplacement de la tuile
               // (implémentation requise)
-              moveTile(tile.index);
-              /*print("position initale: " + tile.index.toString());
-              print("position actuelle :" + tile.position.toString());
-              print("position initale vide :" + emptyIndex.toString());
-              print("position actuelle vide :" + emptyIndexposition.toString());
-              print("====");*/
+              moveTile(tile.position_actuelle);
+              print("position_actuelle initale: " +
+                  tile.position_initiale.toString());
+              print("position_actuelle actuelle :" +
+                  tile.position_actuelle.toString());
+              print("position_actuelle initale vide :" + emptyIndex.toString());
+              print("position_actuelle actuelle vide :" +
+                  emptyIndexposition.toString());
+              print("====");
             },
           ));
     } else {
@@ -246,13 +269,14 @@ class _Exo6_terState extends State<Exo6_ter> {
       return InkWell(
         child: tile.croppedImageTile(1 / _currentSliderValueGridCount),
         onTap: () {
-          checkPosition();
+          checkPositionTileVide();
           // Gérez ici les interactions de déplacement de la tuile
           // (implémentation requise)
-          moveTile(tile.index);
-          /*print("position initiale: " + tile.index.toString());
-          print("position :" + tile.position.toString());
-          print("====");*/
+          moveTile(tile.position_actuelle);
+          print("position_actuelle initiale: " +
+              tile.position_initiale.toString());
+          print("position_actuelle :" + tile.position_actuelle.toString());
+          print("====");
         },
       );
     }
