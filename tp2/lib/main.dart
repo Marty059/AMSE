@@ -7,6 +7,7 @@ import 'package:tp2/Exo4.dart';
 import 'package:tp2/Exo5.dart';
 import 'package:tp2/Exo6.dart';
 import 'package:tp2/Exo6_bis.dart';
+import 'package:tp2/Exo6_ter.dart';
 
 void main() {
   runApp(MyApp());
@@ -71,6 +72,9 @@ class _MyHomePageState extends State<MyHomePage> {
         page = Exo6_bis();
         break;
       case 6:
+        page = Exo6_ter();
+        break;
+      case 7:
         page = Placeholder();
         break;
       default:
@@ -110,6 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.bike_scooter),
                   label: 'Exo6_bis',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.seven_k),
+                  label: 'Exo6_ter',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.local_convenience_store_sharp),
