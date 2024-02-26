@@ -48,6 +48,36 @@ class Exo6_bis extends StatefulWidget {
 
 // État du widget principal
 class Exo6_bisState extends State<Exo6_bis> {
+/* tentative de code qui marche pas sad
+  
+  List generateListe(int taille){
+    List<int> liste = [];
+    
+    for (int i = 0; i < taille; i++){
+      if (i>0){
+        int nombre = 0;
+        while (liste[i]!=nombre){
+          nombre = random.nextInt(taille);
+        }
+        liste.add(nombre);
+      }
+      else{
+        liste.add(random.nextInt(taille));
+      }
+    }
+    return liste;
+  }
+
+  List<Widget> tiles = [];
+
+  void generateTiles(int taille){
+    List listeNombre = generateListe(taille);
+    for (int i = 0; i < taille; i++){
+      tiles.add(Tile.randomColor(listeNombre[i]) as Widget);
+    }
+     
+  } */
+
   // Liste des tuiles
   List<Widget> tiles = List<Widget>.generate(
       9, (index) => TileWidget(Tile.randomColor(index))); // 9 tuiles
