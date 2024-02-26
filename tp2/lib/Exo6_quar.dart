@@ -5,8 +5,15 @@ class Tile {
   String imageURL;
   Alignment alignment;
   int index; // Nouveau champ pour conserver l'index de la tuile dans la grille
+  int position;
+  bool vide;
 
-  Tile({required this.imageURL, required this.alignment, required this.index});
+  Tile(
+      {required this.imageURL,
+      required this.alignment,
+      required this.index,
+      required this.position,
+      required this.vide});
 
   Widget croppedImageTile(double taille) {
     return FittedBox(
@@ -33,9 +40,11 @@ class Exo6_quar extends StatefulWidget {
 class _Exo6_quarState extends State<Exo6_quar> {
   int _currentSliderValueGridCount =
       2; // Changer la taille de la grille pour un jeu de taquin 3x3
+  String currentImageUrl = 'https://picsum.photos/1024';
 
   List<Tile> tiles = []; // Liste des tuiles
-  int emptyIndex = 0; // Index de la tuile vide
+  int emptyIndex = 0;
+  int emptyIndexposition = 0;
 
   @override
   void initState() {
@@ -53,11 +62,14 @@ class _Exo6_quarState extends State<Exo6_quar> {
         imageURL: 'https://picsum.photos/1024',
         alignment: calculateAlignment(i),
         index: i,
+        position: i,
+        vide: false,
       ));
     }
 
     // Initialiser l'index de la tuile vide (dans cet exemple, la dernière tuile)
     emptyIndex = totalTiles - 1;
+    emptyIndexposition = emptyIndex;
 
     return tiles;
   }
@@ -77,8 +89,9 @@ class _Exo6_quarState extends State<Exo6_quar> {
   }
 
   void moveTile(int index) {
+    int position = positionOfIndex(index);
     // Vérifiez si la tuile sélectionnée peut être déplacée
-    if (!isValidMove(index)) {
+    if (!isValidMove(position)) {
       return;
     }
 
@@ -89,6 +102,12 @@ class _Exo6_quarState extends State<Exo6_quar> {
       tiles[emptyIndex] = temp;
 
       emptyIndex = index;
+      for (int i = 0; i < tiles.length; i++) {
+        if (tiles[i].index == tiles.length - 1) {
+          emptyIndexposition = tiles[i].position;
+          break;
+        }
+      }
     });
 
     // Vérifiez si le puzzle est résolu après le mouvement
@@ -113,18 +132,17 @@ class _Exo6_quarState extends State<Exo6_quar> {
     }
   }
 
-  bool isValidMove(int index) {
-    // Vérifiez si la tuile sélectionnée est adjacente à la tuile vide
-    if ((index == emptyIndex - 1 &&
-            index % _currentSliderValueGridCount != 0) || // À gauche
-        (index == emptyIndex + 1 &&
-            emptyIndex % _currentSliderValueGridCount != 0) || // À droite
-        index == emptyIndex - _currentSliderValueGridCount || // En haut
-        index == emptyIndex + _currentSliderValueGridCount) {
-      // En bas
-      return true;
-    }
-    return false;
+  bool isValidMove(int position) {
+    int emptyRow = emptyIndexposition ~/ _currentSliderValueGridCount;
+    int emptyColumn = emptyIndexposition % _currentSliderValueGridCount;
+    int targetRow = position ~/ _currentSliderValueGridCount;
+    int targetColumn = position % _currentSliderValueGridCount;
+
+    return (emptyRow == targetRow &&
+            (emptyColumn - 1 == targetColumn ||
+                emptyColumn + 1 == targetColumn)) ||
+        (emptyColumn == targetColumn &&
+            (emptyRow - 1 == targetRow || emptyRow + 1 == targetRow));
   }
 
   bool isSolved() {
@@ -137,43 +155,70 @@ class _Exo6_quarState extends State<Exo6_quar> {
     return true;
   }
 
+  int positionOfIndex(int index) {
+    int temp = 0;
+    for (int i = 0; i < tiles.length; i++) {
+      if (tiles[i].index == index) {
+        temp = tiles[i].position;
+      }
+    }
+    return temp;
+  }
+
+  void checkPosition() {
+    //changer toutes les positions
+    for (int i = 0; i < tiles.length; i++) {
+      tiles[i].position = i;
+    }
+
+    // Trouvez la nouvelle position de la tuile vide
+    for (int i = 0; i < tiles.length; i++) {
+      if (tiles[i].index == tiles.length - 1) {
+        emptyIndexposition = tiles[i].position;
+        break;
+      }
+    }
+  }
+
   void shuffleTiles() {
-    // Générez une liste d'indices valides pour les tuiles adjacentes à la tuile vide
-    List<int> adjacentIndices = [];
-
-    // Vérifiez si la tuile à gauche de la tuile vide est valide
-    if (emptyIndex % _currentSliderValueGridCount != 0) {
-      adjacentIndices.add(emptyIndex - 1);
-    }
-
-    // Vérifiez si la tuile à droite de la tuile vide est valide
-    if (emptyIndex % _currentSliderValueGridCount !=
-        _currentSliderValueGridCount - 1) {
-      adjacentIndices.add(emptyIndex + 1);
-    }
-
-    // Vérifiez si la tuile au-dessus de la tuile vide est valide
-    if (emptyIndex >= _currentSliderValueGridCount) {
-      adjacentIndices.add(emptyIndex - _currentSliderValueGridCount);
-    }
-
-    // Vérifiez si la tuile en dessous de la tuile vide est valide
-    if (emptyIndex < tiles.length - _currentSliderValueGridCount) {
-      adjacentIndices.add(emptyIndex + _currentSliderValueGridCount);
-    }
-
-    // Choisissez aléatoirement une direction parmi les directions valides
-    int randomIndex = adjacentIndices[Random().nextInt(adjacentIndices.length)];
-
-    // Effectuez le mouvement de la tuile sélectionnée
     setState(() {
-      Tile temp = tiles[randomIndex];
-      tiles[randomIndex] = tiles[emptyIndex];
-      tiles[emptyIndex] = temp;
+      // Mélangez les tuiles en permutant aléatoirement les tuiles
+      for (int i = tiles.length - 1; i > 0; i--) {
+        int j = Random().nextInt(i + 1);
+        Tile temp = tiles[i];
 
-      emptyIndex = randomIndex;
+        tiles[i] = tiles[j];
+
+        tiles[j] = temp;
+      }
+
+      checkPosition();
     });
   }
+
+//
+//Code à ajouter pour l'image complète
+// Méthode pour afficher l'image complète du taquin
+  void showFullImage() {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('Aide : Image complète du Taquin'),
+        content: Image.network(
+            'https://picsum.photos/1024'), // Affichez l'image complète
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Fermer'),
+          ),
+        ],
+      ),
+    );
+  }
+  //
+  //
 
   @override
   Widget build(BuildContext context) {
@@ -191,6 +236,20 @@ class _Exo6_quarState extends State<Exo6_quar> {
             }).toList(),
           ),
         ),
+
+        //
+        //
+        // Bouton pour afficher l'image complète du taquin
+        ElevatedButton(
+          onPressed: () {
+            // Affichez l'image complète (implémentation requise)
+            showFullImage();
+          },
+          child: Text('Afficher l\'image complète'),
+        ),
+        //
+        //
+
         // Bouton pour mélanger les tuiles (optionnel)
         ElevatedButton(
           onPressed: () {
@@ -205,22 +264,36 @@ class _Exo6_quarState extends State<Exo6_quar> {
 
   Widget createTileWidgetFrom(Tile tile) {
     if (tile.index == emptyIndex) {
-      // Si c'est la tuile vide, affichez un conteneur avec une couleur de fond semi-transparente
-      return Container(
-        color: Colors.grey.withOpacity(0.5), // Opacité de 50%
-      );
+      return Opacity(
+          opacity: 0.2,
+          child: InkWell(
+            child: tile.croppedImageTile(1 / _currentSliderValueGridCount),
+            onTap: () {
+              checkPosition();
+              // Gérez ici les interactions de déplacement de la tuile
+              // (implémentation requise)
+              moveTile(tile.index);
+              /*print("position initale: " + tile.index.toString());
+              print("position actuelle :" + tile.position.toString());
+              print("position initale vide :" + emptyIndex.toString());
+              print("position actuelle vide :" + emptyIndexposition.toString());
+              print("====");*/
+            },
+          ));
     } else {
       // Sinon, affichez la tuile d'image normale
       return InkWell(
         child: tile.croppedImageTile(1 / _currentSliderValueGridCount),
         onTap: () {
+          checkPosition();
           // Gérez ici les interactions de déplacement de la tuile
           // (implémentation requise)
           moveTile(tile.index);
+          /*print("position initiale: " + tile.index.toString());
+          print("position :" + tile.position.toString());
+          print("====");*/
         },
       );
     }
   }
 }
-
-//int moves = Random().nextInt(16) + 5;
