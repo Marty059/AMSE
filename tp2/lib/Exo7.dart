@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'dart:async';
 
 class Tile {
   String imageURL;
@@ -32,20 +33,33 @@ class Tile {
   }
 }
 
-class Exo6_quar extends StatefulWidget {
+class Exo7 extends StatefulWidget {
   @override
-  _Exo6_quarState createState() => _Exo6_quarState();
+  _Exo7State createState() => _Exo7State();
 }
 
-class _Exo6_quarState extends State<Exo6_quar> {
+class _Exo7State extends State<Exo7> {
   int taille_grille = 3;
   List<Tile> tiles = [];
   int deplacement = 0;
+  Stopwatch _stopwatch = Stopwatch();
+  String _elapsedTime = '';
 
   @override
   void initState() {
     super.initState();
     tiles = generateTiles();
+    //_startTimer();
+  }
+
+  // Méthode pour démarrer le chronomètre
+  void _startTimer() {
+    _stopwatch.start();
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        _elapsedTime = _stopwatch.elapsed.inSeconds.toString();
+      });
+    });
   }
 
   List<Tile> generateTiles() {
@@ -92,15 +106,22 @@ class _Exo6_quarState extends State<Exo6_quar> {
       tileToSwap.position_actuelle = emptyTilePosition;
       deplacement += 1;
       print(deplacement);
+      // Démarrer le chronomètre si ce n'est pas déjà fait
+      if (!_stopwatch.isRunning) {
+        _startTimer();
+      }
     });
 
     if (isSolved()) {
+      // Arrêter le chronomètre lors de la victoire
+      _stopwatch.stop();
+
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
           title: Text('Félicitations !'),
-          content:
-              Text('Vous avez résolu le puzzle en $deplacement déplacements !'),
+          content: Text(
+              'Vous avez résolu le puzzle en $_elapsedTime secondes avec $deplacement coups !'),
           actions: [
             TextButton(
               onPressed: () {
@@ -180,6 +201,11 @@ class _Exo6_quarState extends State<Exo6_quar> {
               return createTileWidgetFrom(tile);
             }).toList(),
           ),
+        ),
+        SizedBox(height: 20),
+        Text(
+          'Temps écoulé : $_elapsedTime secondes',
+          style: TextStyle(fontSize: 20),
         ),
         SizedBox(height: 20),
         Text(

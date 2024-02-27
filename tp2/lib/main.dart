@@ -9,6 +9,7 @@ import 'package:tp2/Exo6.dart';
 import 'package:tp2/Exo6_bis.dart';
 import 'package:tp2/Exo6_quar.dart';
 import 'package:tp2/Exo6_ter.dart';
+import 'package:tp2/Exo7.dart';
 
 void main() {
   runApp(MyApp());
@@ -79,6 +80,9 @@ class _MyHomePageState extends State<MyHomePage> {
         page = Exo6_quar();
         break;
       case 8:
+        page = Exo7();
+        break;
+      case 9:
         page = Placeholder();
         break;
       default:
@@ -126,6 +130,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.car_crash),
                   label: 'Exo6_quar',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.eight_k_plus),
+                  label: 'Exo7',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.local_convenience_store_sharp),
