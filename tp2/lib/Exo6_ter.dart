@@ -163,6 +163,26 @@ class _Exo6_terState extends State<Exo6_ter> {
     });
   }
 
+  // Méthode pour afficher l'image complète du taquin
+  void showFullImage() {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('Aide : Image complète du Taquin'),
+        content: Image.network(
+            'https://picsum.photos/1024'), // Affichez l'image complète
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Fermer'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -178,6 +198,15 @@ class _Exo6_terState extends State<Exo6_ter> {
             }).toList(),
           ),
         ),
+
+        // Bouton pour afficher l'image complète du taquin
+        ElevatedButton(
+          onPressed: () {
+            showFullImage();
+          },
+          child: Text('Afficher l\'image complète'),
+        ),
+
         ElevatedButton(
           onPressed: () {
             shuffleTiles();
