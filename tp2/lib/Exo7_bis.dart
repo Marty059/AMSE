@@ -58,9 +58,13 @@ class _Exo7_bisState extends State<Exo7_bis> {
   void _startTimer() {
     _stopwatch.start();
     Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        _elapsedTime = _stopwatch.elapsed.inSeconds.toString();
-      });
+      if (mounted) {
+        setState(() {
+          _elapsedTime = _stopwatch.elapsed.inSeconds.toString();
+        });
+      } else {
+        timer.cancel();
+      }
     });
   }
 

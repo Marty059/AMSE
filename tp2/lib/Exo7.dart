@@ -56,9 +56,13 @@ class _Exo7State extends State<Exo7> {
   void _startTimer() {
     _stopwatch.start();
     Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        _elapsedTime = _stopwatch.elapsed.inSeconds.toString();
-      });
+      if (mounted) {
+        setState(() {
+          _elapsedTime = _stopwatch.elapsed.inSeconds.toString();
+        });
+      } else {
+        timer.cancel();
+      }
     });
   }
 
