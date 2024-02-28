@@ -38,7 +38,7 @@ class Exo6_ter extends StatefulWidget {
 }
 
 class _Exo6_terState extends State<Exo6_ter> {
-  int taille_grille = 3;
+  int taille_grille = 4;
   List<Tile> tiles = [];
   int deplacement = 0;
 
