@@ -9,6 +9,11 @@ import 'package:tp2/Exo6.dart';
 import 'package:tp2/Exo6_bis.dart';
 import 'package:tp2/Exo6_quar.dart';
 import 'package:tp2/Exo6_ter.dart';
+import 'package:tp2/Exo7.dart';
+import 'package:tp2/Exo7_bis.dart';
+import 'package:tp2/Exo7_ter.dart';
+import 'package:tp2/Exo8.dart';
+import 'package:tp2/Exo8_bis.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,6 +27,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Géry et Martin app',
         theme: ThemeData(
           useMaterial3: true,
@@ -79,6 +85,21 @@ class _MyHomePageState extends State<MyHomePage> {
         page = Exo6_quar();
         break;
       case 8:
+        page = Exo7();
+        break;
+      case 9:
+        page = Exo7_bis();
+        break;
+      case 10:
+        page = Exo7_ter();
+        break;
+      case 11:
+        page = Exo8();
+        break;
+      case 12:
+        page = Exo8_bis();
+        break;
+      case 13:
         page = Placeholder();
         break;
       default:
@@ -126,6 +147,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.car_crash),
                   label: 'Exo6_quar',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.eight_k_plus),
+                  label: 'Exo7',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.nine_k_plus),
+                  label: 'Exo7_bis',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.ten_k),
+                  label: 'Exo7_ter',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.wine_bar),
+                  label: 'Exo8',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.school),
+                  label: 'Exo8_bis',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.local_convenience_store_sharp),

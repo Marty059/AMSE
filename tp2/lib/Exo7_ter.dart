@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'dart:async';
+
+enum Difficulty { easy, medium, hard }
 
 class Tile {
   String imageURL;
@@ -32,20 +35,36 @@ class Tile {
   }
 }
 
-class Exo6_quar extends StatefulWidget {
+class Exo7_ter extends StatefulWidget {
   @override
-  _Exo6_quarState createState() => _Exo6_quarState();
+  _Exo7_terState createState() => _Exo7_terState();
 }
 
-class _Exo6_quarState extends State<Exo6_quar> {
+class _Exo7_terState extends State<Exo7_ter> {
   int taille_grille = 3;
   List<Tile> tiles = [];
   int deplacement = 0;
+  Stopwatch _stopwatch = Stopwatch();
+  String _elapsedTime = '';
 
   @override
   void initState() {
     super.initState();
     tiles = generateTiles();
+  }
+
+  // Méthode pour démarrer le chronomètre
+  void _startTimer() {
+    _stopwatch.start();
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      if (mounted) {
+        setState(() {
+          _elapsedTime = _stopwatch.elapsed.inSeconds.toString();
+        });
+      } else {
+        timer.cancel();
+      }
+    });
   }
 
   List<Tile> generateTiles() {
@@ -91,16 +110,23 @@ class _Exo6_quarState extends State<Exo6_quar> {
       emptyTile.position_actuelle = position_actuelle;
       tileToSwap.position_actuelle = emptyTilePosition;
       deplacement += 1;
-      print(deplacement);
+
+      // Démarrer le chronomètre si ce n'est pas déjà fait
+      if (!_stopwatch.isRunning) {
+        _startTimer();
+      }
     });
 
     if (isSolved()) {
+      // Arrêter le chronomètre lors de la victoire
+      _stopwatch.stop();
+
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
           title: Text('Félicitations !'),
-          content:
-              Text('Vous avez résolu le puzzle en $deplacement déplacements !'),
+          content: Text(
+              'Vous avez résolu le puzzle en $_elapsedTime secondes avec $deplacement coups !'),
           actions: [
             TextButton(
               onPressed: () {
@@ -166,41 +192,107 @@ class _Exo6_quarState extends State<Exo6_quar> {
     );
   }
 
+  // Méthode pour changer la difficulté
+  void changeDifficulty(Difficulty difficulty) {
+    setState(() {
+      switch (difficulty) {
+        case Difficulty.easy:
+          taille_grille = 3;
+          break;
+        case Difficulty.medium:
+          taille_grille = 4;
+          break;
+        case Difficulty.hard:
+          taille_grille = 5;
+          break;
+      }
+      tiles = generateTiles();
+    });
+  }
+
+  // Ajoutez cette fonction pour obtenir la difficulté actuelle
+  Difficulty _getCurrentDifficulty() {
+    if (taille_grille == 3) {
+      return Difficulty.easy;
+    } else if (taille_grille == 4) {
+      return Difficulty.medium;
+    } else {
+      return Difficulty.hard;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          child: GridView.count(
-            mainAxisSpacing: 2,
-            crossAxisSpacing: 2,
-            crossAxisCount: taille_grille,
-            children: tiles.map((tile) {
-              return createTileWidgetFrom(tile);
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.timer),
+                SizedBox(width: 4),
+                Text('$_elapsedTime s'),
+              ],
+            ),
+            Row(
+              children: [
+                Icon(Icons.move_down),
+                SizedBox(width: 4),
+                Text('$deplacement'),
+              ],
+            ),
+          ],
+        ),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Add a DropdownButton or buttons for selecting difficulty
+          DropdownButton<Difficulty>(
+            value: _getCurrentDifficulty(),
+            onChanged: (Difficulty? newValue) {
+              if (newValue != null) {
+                changeDifficulty(newValue);
+              }
+            },
+            items: <Difficulty>[
+              Difficulty.easy,
+              Difficulty.medium,
+              Difficulty.hard,
+            ].map<DropdownMenuItem<Difficulty>>((Difficulty value) {
+              return DropdownMenuItem<Difficulty>(
+                value: value,
+                child: Text(value.toString().split('.').last),
+              );
             }).toList(),
           ),
-        ),
-        SizedBox(height: 20),
-        Text(
-          'Déplacements : $deplacement',
-          style: TextStyle(fontSize: 20),
-        ),
-        SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () {
-            showFullImage();
-          },
-          child: Text('Afficher l\'image complète'),
-        ),
-        SizedBox(height: 10),
-        ElevatedButton(
-          onPressed: () {
-            shuffleTiles();
-          },
-          child: Text('Mélanger les tuiles'),
-        ),
-      ],
+          Expanded(
+            child: GridView.count(
+              mainAxisSpacing: 2,
+              crossAxisSpacing: 2,
+              crossAxisCount: taille_grille,
+              children: tiles.map((tile) {
+                return createTileWidgetFrom(tile);
+              }).toList(),
+            ),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              showFullImage();
+            },
+            child: Text('Afficher l\'image complète'),
+          ),
+          SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () {
+              shuffleTiles();
+            },
+            child: Text('Mélanger les tuiles'),
+          ),
+        ],
+      ),
     );
   }
 

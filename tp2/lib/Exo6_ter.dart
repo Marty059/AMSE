@@ -40,6 +40,7 @@ class Exo6_ter extends StatefulWidget {
 class _Exo6_terState extends State<Exo6_ter> {
   int taille_grille = 4;
   List<Tile> tiles = [];
+  int deplacement = 0;
 
   @override
   void initState() {
@@ -95,6 +96,8 @@ class _Exo6_terState extends State<Exo6_ter> {
 
       emptyTile.position_actuelle = position_actuelle;
       tileToSwap.position_actuelle = emptyTilePosition;
+      deplacement += 1;
+      print(deplacement);
     });
 
     // Vérifiez si le puzzle est résolu après le mouvement
@@ -160,6 +163,26 @@ class _Exo6_terState extends State<Exo6_ter> {
     });
   }
 
+  // Méthode pour afficher l'image complète du taquin
+  void showFullImage() {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('Aide : Image complète du Taquin'),
+        content: Image.network(
+            'https://picsum.photos/1024'), // Affichez l'image complète
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Fermer'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -175,6 +198,15 @@ class _Exo6_terState extends State<Exo6_ter> {
             }).toList(),
           ),
         ),
+
+        // Bouton pour afficher l'image complète du taquin
+        ElevatedButton(
+          onPressed: () {
+            showFullImage();
+          },
+          child: Text('Afficher l\'image complète'),
+        ),
+
         ElevatedButton(
           onPressed: () {
             shuffleTiles();
