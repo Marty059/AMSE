@@ -35,18 +35,20 @@ class Tile {
   }
 }
 
-class Exo8 extends StatefulWidget {
+class Exo8_bis extends StatefulWidget {
   @override
-  _Exo8State createState() => _Exo8State();
+  _Exo8_bisState createState() => _Exo8_bisState();
 }
 
-class _Exo8State extends State<Exo8> {
+class _Exo8_bisState extends State<Exo8_bis> {
   int taille_grille = 3;
   List<Tile> tiles = [];
   int deplacement = 0;
   Stopwatch _stopwatch = Stopwatch();
   String _elapsedTime = '';
   bool partieEnCours = false;
+  // Déclarez une pile pour stocker l'historique des mouvements
+  List<int> movesHistory = [];
 
   @override
   void initState() {
@@ -105,11 +107,17 @@ class _Exo8State extends State<Exo8> {
       Tile emptyTile = tiles[emptyTilePosition];
       Tile tileToSwap = tiles[position_actuelle];
 
+      // Sauvegarder l'état avant le mouvement uniquement s'il y a eu un changement
+      if (emptyTile.position_actuelle != position_actuelle) {
+        movesHistory.add(emptyTilePosition);
+      }
+
       tiles[position_actuelle] = emptyTile;
       tiles[emptyTilePosition] = tileToSwap;
 
       emptyTile.position_actuelle = position_actuelle;
       tileToSwap.position_actuelle = emptyTilePosition;
+
       if (partieEnCours == true) {
         deplacement += 1;
 
@@ -173,19 +181,20 @@ class _Exo8State extends State<Exo8> {
       // Réinitialiser le taquin à l'état initial
       //tiles = generateTiles();
 
+      // Vider l'historique des mouvements
+      movesHistory.clear();
+
       // Nombre de mouvements aléatoires pour mélanger le taquin
-      int numberOfMoves =
-          1; // Vous pouvez ajuster ce nombre selon votre préférence
+      int numberOfMoves = 1; // Nombre de mouvements pour mélanger le taquin
 
       // Effectuer des mouvements aléatoires valides
       for (int i = 0; i < numberOfMoves; i++) {
-        // Trouver les positions valides pour l'échange
+        // Obtenir une liste de mouvements valides
         List<int> validMoves = [];
         int emptyTilePosition = tiles.indexWhere((tile) => tile.vide);
         int emptyRow = emptyTilePosition ~/ taille_grille;
         int emptyColumn = emptyTilePosition % taille_grille;
 
-        // Ajouter les positions valides à la liste
         if (emptyRow > 0) validMoves.add(emptyTilePosition - taille_grille);
         if (emptyRow < taille_grille - 1)
           validMoves.add(emptyTilePosition + taille_grille);
@@ -193,12 +202,15 @@ class _Exo8State extends State<Exo8> {
         if (emptyColumn < taille_grille - 1)
           validMoves.add(emptyTilePosition + 1);
 
-        // Choisir une position aléatoire parmi les positions valides
+        // Choisir un mouvement aléatoire parmi les mouvements valides
         int randomMove = Random().nextInt(validMoves.length);
         int newPosition = validMoves[randomMove];
 
-        // Déplacer la tuile correspondante à cette position
+        // Effectuer le mouvement
         moveTile(newPosition);
+
+        // Vider l'historique des mouvements
+        movesHistory.clear();
       }
     });
   }
@@ -250,6 +262,29 @@ class _Exo8State extends State<Exo8> {
     }
   }
 
+  void undoMove() {
+    if (partieEnCours == true) {
+      if (movesHistory.isNotEmpty) {
+        int lastMove = movesHistory.removeLast();
+
+        setState(() {
+          int emptyTilePosition = tiles.indexWhere((tile) => tile.vide);
+          Tile emptyTile = tiles[emptyTilePosition];
+          Tile tileToSwap = tiles[lastMove];
+
+          tiles[lastMove] = emptyTile;
+          tiles[emptyTilePosition] = tileToSwap;
+
+          emptyTile.position_actuelle = lastMove;
+          tileToSwap.position_actuelle = emptyTilePosition;
+
+          // Décrémenter le compteur de mouvements
+          deplacement -= 1;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -263,6 +298,15 @@ class _Exo8State extends State<Exo8> {
                 SizedBox(width: 4),
                 Text('$_elapsedTime s'),
               ],
+            ),
+            // Ajoutez le bouton d'annulation ici
+            IconButton(
+              icon: Icon(Icons.undo),
+              onPressed: () {
+                if (partieEnCours == true) {
+                  undoMove();
+                }
+              },
             ),
             Row(
               children: [
