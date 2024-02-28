@@ -185,7 +185,7 @@ class _Exo8_bisState extends State<Exo8_bis> {
       movesHistory.clear();
 
       // Nombre de mouvements aléatoires pour mélanger le taquin
-      int numberOfMoves = 1; // Nombre de mouvements pour mélanger le taquin
+      int numberOfMoves = 100; // Nombre de mouvements pour mélanger le taquin
 
       // Effectuer des mouvements aléatoires valides
       for (int i = 0; i < numberOfMoves; i++) {
