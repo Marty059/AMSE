@@ -12,6 +12,7 @@ import 'package:tp2/Exo6_ter.dart';
 import 'package:tp2/Exo7.dart';
 import 'package:tp2/Exo7_bis.dart';
 import 'package:tp2/Exo7_ter.dart';
+import 'package:tp2/Exo8.dart';
 
 void main() {
   runApp(MyApp());
@@ -92,6 +93,9 @@ class _MyHomePageState extends State<MyHomePage> {
         page = Exo7_ter();
         break;
       case 11:
+        page = Exo8();
+        break;
+      case 12:
         page = Placeholder();
         break;
       default:
@@ -151,6 +155,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.ten_k),
                   label: 'Exo7_ter',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.wine_bar),
+                  label: 'Exo8',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.local_convenience_store_sharp),
