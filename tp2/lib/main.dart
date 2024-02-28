@@ -11,6 +11,7 @@ import 'package:tp2/Exo6_quar.dart';
 import 'package:tp2/Exo6_ter.dart';
 import 'package:tp2/Exo7.dart';
 import 'package:tp2/Exo7_bis.dart';
+import 'package:tp2/Exo7_ter.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Géry et Martin app',
         theme: ThemeData(
           useMaterial3: true,
@@ -87,6 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
         page = Exo7_bis();
         break;
       case 10:
+        page = Exo7_ter();
+        break;
+      case 11:
         page = Placeholder();
         break;
       default:
@@ -142,6 +147,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.nine_k_plus),
                   label: 'Exo7_bis',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.ten_k),
+                  label: 'Exo7_ter',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.local_convenience_store_sharp),
