@@ -2,7 +2,19 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:async';
 
-enum Difficulty { easy, medium, hard }
+enum TailleGrille {
+  DeuxParDeux,
+  TroisParTrois,
+  QuatreParQuatre,
+  CinqParCinq,
+  SixParSix
+}
+
+enum NiveauDifficulte {
+  Facile,
+  Moyen,
+  Difficile,
+}
 
 class Tile {
   String imageURL;
@@ -47,8 +59,8 @@ class _Exo9State extends State<Exo9> {
   Stopwatch _stopwatch = Stopwatch();
   String _elapsedTime = '';
   bool partieEnCours = false;
-  // Déclarez une pile pour stocker l'historique des mouvements
   List<int> movesHistory = [];
+  NiveauDifficulte _niveauDifficulte = NiveauDifficulte.Moyen;
 
   @override
   void initState() {
@@ -70,6 +82,7 @@ class _Exo9State extends State<Exo9> {
     });
   }
 
+  // Méthode pour générer les tuiles
   List<Tile> generateTiles() {
     List<Tile> tiles = [];
     int totalTiles = taille_grille * taille_grille;
@@ -97,6 +110,7 @@ class _Exo9State extends State<Exo9> {
     return Alignment(horizontalAlignment, verticalAlignment);
   }
 
+  // Méthode pour déplacer une tuile
   void moveTile(int position_actuelle) {
     if (!isValidMove(position_actuelle)) {
       return;
@@ -153,6 +167,7 @@ class _Exo9State extends State<Exo9> {
     }
   }
 
+  // Méthode pour vérifier si un mouvement est valide
   bool isValidMove(int position_actuelle) {
     int emptyTilePosition = tiles.indexWhere((tile) => tile.vide);
     int emptyRow = emptyTilePosition ~/ taille_grille;
@@ -167,6 +182,7 @@ class _Exo9State extends State<Exo9> {
             (emptyRow - 1 == targetRow || emptyRow + 1 == targetRow));
   }
 
+  // Méthode pour vérifier si le puzzle est résolu
   bool isSolved() {
     for (int i = 0; i < tiles.length; i++) {
       if (tiles[i].position_initiale != i) {
@@ -176,16 +192,14 @@ class _Exo9State extends State<Exo9> {
     return true;
   }
 
+  // Méthode pour mélanger les tuiles
   void shuffleTiles() {
     setState(() {
-      // Réinitialiser le taquin à l'état initial
-      //tiles = generateTiles();
-
       // Vider l'historique des mouvements
       movesHistory.clear();
 
       // Nombre de mouvements aléatoires pour mélanger le taquin
-      int numberOfMoves = 100; // Nombre de mouvements pour mélanger le taquin
+      int numberOfMoves = getNumberOfMovesForDifficulty();
 
       // Effectuer des mouvements aléatoires valides
       for (int i = 0; i < numberOfMoves; i++) {
@@ -215,6 +229,20 @@ class _Exo9State extends State<Exo9> {
     });
   }
 
+  // Méthode pour obtenir le nombre de mouvements pour la difficulté actuelle
+  int getNumberOfMovesForDifficulty() {
+    switch (_niveauDifficulte) {
+      case NiveauDifficulte.Facile:
+        return 50;
+      case NiveauDifficulte.Moyen:
+        return 100;
+      case NiveauDifficulte.Difficile:
+        return 200;
+      default:
+        return 100;
+    }
+  }
+
   void showFullImage() {
     showDialog(
       context: context,
@@ -234,17 +262,23 @@ class _Exo9State extends State<Exo9> {
   }
 
   // Méthode pour changer la difficulté
-  void changeDifficulty(Difficulty difficulty) {
+  void changeTailleGrille(TailleGrille tailleGrille) {
     setState(() {
-      switch (difficulty) {
-        case Difficulty.easy:
+      switch (tailleGrille) {
+        case TailleGrille.DeuxParDeux:
+          taille_grille = 2;
+          break;
+        case TailleGrille.TroisParTrois:
           taille_grille = 3;
           break;
-        case Difficulty.medium:
+        case TailleGrille.QuatreParQuatre:
           taille_grille = 4;
           break;
-        case Difficulty.hard:
+        case TailleGrille.CinqParCinq:
           taille_grille = 5;
+          break;
+        case TailleGrille.SixParSix:
+          taille_grille = 6;
           break;
       }
       tiles = generateTiles();
@@ -252,14 +286,17 @@ class _Exo9State extends State<Exo9> {
   }
 
   // Ajoutez cette fonction pour obtenir la difficulté actuelle
-  Difficulty _getCurrentDifficulty() {
-    if (taille_grille == 3) {
-      return Difficulty.easy;
-    } else if (taille_grille == 4) {
-      return Difficulty.medium;
-    } else {
-      return Difficulty.hard;
-    }
+  TailleGrille _getCurrentTailleGrille() {
+    if (taille_grille == 2)
+      return TailleGrille.DeuxParDeux;
+    else if (taille_grille == 3)
+      return TailleGrille.TroisParTrois;
+    else if (taille_grille == 4)
+      return TailleGrille.QuatreParQuatre;
+    else if (taille_grille == 5)
+      return TailleGrille.CinqParCinq;
+    else
+      return TailleGrille.SixParSix;
   }
 
   void undoMove() {
@@ -299,15 +336,6 @@ class _Exo9State extends State<Exo9> {
                 Text('$_elapsedTime s'),
               ],
             ),
-            // Ajoutez le bouton d'annulation ici
-            IconButton(
-              icon: Icon(Icons.undo),
-              onPressed: () {
-                if (partieEnCours == true) {
-                  undoMove();
-                }
-              },
-            ),
             Row(
               children: [
                 Icon(Icons.move_down),
@@ -321,25 +349,69 @@ class _Exo9State extends State<Exo9> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Add a DropdownButton or buttons for selecting difficulty
-          DropdownButton<Difficulty>(
-            value: _getCurrentDifficulty(),
-            onChanged: (Difficulty? newValue) {
-              if (newValue != null) {
-                changeDifficulty(newValue);
-              }
-            },
-            items: <Difficulty>[
-              Difficulty.easy,
-              Difficulty.medium,
-              Difficulty.hard,
-            ].map<DropdownMenuItem<Difficulty>>((Difficulty value) {
-              return DropdownMenuItem<Difficulty>(
-                value: value,
-                child: Text(value.toString().split('.').last),
-              );
-            }).toList(),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('Taille du Taquin : '),
+                  //SizedBox(height: 5),
+                  DropdownButton<TailleGrille>(
+                    value: _getCurrentTailleGrille(),
+                    onChanged: (TailleGrille? newValue) {
+                      if (newValue != null) {
+                        changeTailleGrille(newValue);
+                      }
+                    },
+                    items: <TailleGrille>[
+                      TailleGrille.DeuxParDeux,
+                      TailleGrille.TroisParTrois,
+                      TailleGrille.QuatreParQuatre,
+                      TailleGrille.CinqParCinq,
+                      TailleGrille.SixParSix,
+                    ].map<DropdownMenuItem<TailleGrille>>((TailleGrille value) {
+                      return DropdownMenuItem<TailleGrille>(
+                        value: value,
+                        child: Text(value.toString().split('.').last),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
+              SizedBox(width: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('Choix de difficulté : '),
+                  //SizedBox(height: 5),
+                  DropdownButton<NiveauDifficulte>(
+                    value: _niveauDifficulte,
+                    onChanged: (NiveauDifficulte? newValue) {
+                      if (newValue != null) {
+                        setState(() {
+                          _niveauDifficulte = newValue;
+                        });
+                      }
+                    },
+                    items: <NiveauDifficulte>[
+                      NiveauDifficulte.Facile,
+                      NiveauDifficulte.Moyen,
+                      NiveauDifficulte.Difficile,
+                    ].map<DropdownMenuItem<NiveauDifficulte>>(
+                        (NiveauDifficulte value) {
+                      return DropdownMenuItem<NiveauDifficulte>(
+                        value: value,
+                        child: Text(value.toString().split('.').last),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
+            ],
           ),
+          SizedBox(height: 5),
           Expanded(
             child: GridView.count(
               mainAxisSpacing: 2,
