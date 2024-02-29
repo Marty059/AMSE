@@ -257,6 +257,7 @@ class _Exo8State extends State<Exo8> {
     'assets/imgs/🏞 Paysage 🏞.png',
     'assets/imgs/☀️ Soleil ☀️.png',
     'assets/imgs/🥕 Carotte 🥕.png',
+    'assets/imgs/Super prof quon adore.png',
   ];
 
   Future<void> choixImage(BuildContext context) async {
