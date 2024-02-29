@@ -374,6 +374,14 @@ class _Exo9State extends State<Exo9> {
                 Text('$_elapsedTime s'),
               ],
             ),
+            IconButton(
+              icon: Icon(Icons.undo),
+              onPressed: () {
+                if (partieEnCours == true) {
+                  undoMove();
+                }
+              },
+            ),
             Row(
               children: [
                 Icon(Icons.move_down),
@@ -483,8 +491,9 @@ class _Exo9State extends State<Exo9> {
                 onPressed: () {
                   choixImage(context);
                 },
-                child: Text('Choisir une image de fond prédéfinie'),
+                child: Text('Image prédéfinie'),
               ),
+              SizedBox(width: 10),
               ElevatedButton(
                 onPressed: () {
                   setState(() {
