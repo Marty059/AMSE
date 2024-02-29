@@ -251,11 +251,12 @@ class _Exo8State extends State<Exo8> {
   }
 
   List<String> images = [
-    'assets/imgs/alien.png',
-    'assets/imgs/carotte.png',
-    'assets/imgs/Champi.png',
-    'assets/imgs/landscape.png',
-    'assets/imgs/soleil.png',
+    'assets/imgs/👽 Alien 👽.png',
+    'assets/imgs/⚽️ France ⚽️.png',
+    'assets/imgs/🍄 Champi 🍄.png',
+    'assets/imgs/🏞 Paysage 🏞.png',
+    'assets/imgs/☀️ Soleil ☀️.png',
+    'assets/imgs/🥕 Carotte 🥕.png',
   ];
 
   Future<void> choixImage(BuildContext context) async {
@@ -267,8 +268,9 @@ class _Exo8State extends State<Exo8> {
           content: SingleChildScrollView(
             child: ListBody(
               children: images.map((String image) {
+                String imageName = image.split('/').last.replaceAll('.png', '');
                 return ListTile(
-                  title: Text(image),
+                  title: Text(imageName),
                   onTap: () {
                     setState(() {
                       Tile.imageURL = image;
