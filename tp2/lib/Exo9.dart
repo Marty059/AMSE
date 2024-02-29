@@ -224,6 +224,10 @@ class _Exo9State extends State<Exo9> {
         // Vider l'historique des mouvements
         movesHistory.clear();
       }
+      if (!_stopwatch.isRunning) {
+        _startTimer();
+      }
+      partieEnCours = true;
     });
   }
 
@@ -396,67 +400,113 @@ class _Exo9State extends State<Exo9> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Taille du Taquin : '),
-                  //SizedBox(height: 5),
-                  DropdownButton<TailleGrille>(
-                    value: _getCurrentTailleGrille(),
-                    onChanged: (TailleGrille? newValue) {
-                      if (newValue != null) {
-                        changeTailleGrille(newValue);
-                      }
-                    },
-                    items: <TailleGrille>[
-                      TailleGrille.DeuxParDeux,
-                      TailleGrille.TroisParTrois,
-                      TailleGrille.QuatreParQuatre,
-                      TailleGrille.CinqParCinq,
-                      TailleGrille.SixParSix,
-                    ].map<DropdownMenuItem<TailleGrille>>((TailleGrille value) {
-                      return DropdownMenuItem<TailleGrille>(
-                        value: value,
-                        child: Text(value.toString().split('.').last),
-                      );
-                    }).toList(),
+          !partieEnCours
+              ? Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Taille du Taquin : '),
+                            //SizedBox(height: 5),
+                            DropdownButton<TailleGrille>(
+                              value: _getCurrentTailleGrille(),
+                              onChanged: (TailleGrille? newValue) {
+                                if (newValue != null) {
+                                  changeTailleGrille(newValue);
+                                }
+                              },
+                              items: <TailleGrille>[
+                                TailleGrille.DeuxParDeux,
+                                TailleGrille.TroisParTrois,
+                                TailleGrille.QuatreParQuatre,
+                                TailleGrille.CinqParCinq,
+                                TailleGrille.SixParSix,
+                              ].map<DropdownMenuItem<TailleGrille>>(
+                                  (TailleGrille value) {
+                                return DropdownMenuItem<TailleGrille>(
+                                  value: value,
+                                  child: Text(value.toString().split('.').last),
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Choix de difficulté : '),
+                            //SizedBox(height: 5),
+                            DropdownButton<NiveauDifficulte>(
+                              value: _niveauDifficulte,
+                              onChanged: (NiveauDifficulte? newValue) {
+                                if (newValue != null) {
+                                  setState(() {
+                                    _niveauDifficulte = newValue;
+                                  });
+                                }
+                              },
+                              items: <NiveauDifficulte>[
+                                NiveauDifficulte.Facile,
+                                NiveauDifficulte.Moyen,
+                                NiveauDifficulte.Difficile,
+                              ].map<DropdownMenuItem<NiveauDifficulte>>(
+                                  (NiveauDifficulte value) {
+                                return DropdownMenuItem<NiveauDifficulte>(
+                                  value: value,
+                                  child: Text(value.toString().split('.').last),
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        shuffleTiles();
+                      },
+                      icon: Icon(Icons.play_arrow,
+                          color: Colors.white), // Ajoutez l'icône ici
+                      label: Text(
+                        'Démarrer la partie',
+                        style: TextStyle(
+                            color: Colors.green[900]), // Texte en vert foncé
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors
+                            .lightGreen[200], // Fond de bouton en vert clair
+                      ),
+                    ),
+                  ],
+                )
+              : ElevatedButton.icon(
+                  onPressed: () {
+                    setState(() {
+                      shuffleTiles();
+                      _stopwatch.stop();
+                      _elapsedTime = '';
+                      partieEnCours = true;
+                      generateTiles();
+                      deplacement = 0;
+                    });
+                  },
+                  icon: Icon(Icons.play_arrow,
+                      color: Colors.white), // Ajoutez l'icône ici
+                  label: Text(
+                    'Nouvelle Partie',
+                    style: TextStyle(
+                        color: Colors.green[900]), // Texte en vert foncé
                   ),
-                ],
-              ),
-              SizedBox(width: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Choix de difficulté : '),
-                  //SizedBox(height: 5),
-                  DropdownButton<NiveauDifficulte>(
-                    value: _niveauDifficulte,
-                    onChanged: (NiveauDifficulte? newValue) {
-                      if (newValue != null) {
-                        setState(() {
-                          _niveauDifficulte = newValue;
-                        });
-                      }
-                    },
-                    items: <NiveauDifficulte>[
-                      NiveauDifficulte.Facile,
-                      NiveauDifficulte.Moyen,
-                      NiveauDifficulte.Difficile,
-                    ].map<DropdownMenuItem<NiveauDifficulte>>(
-                        (NiveauDifficulte value) {
-                      return DropdownMenuItem<NiveauDifficulte>(
-                        value: value,
-                        child: Text(value.toString().split('.').last),
-                      );
-                    }).toList(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Colors.lightGreen[200], // Fond de bouton en vert clair
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
           SizedBox(height: 5),
           Expanded(
             child: GridView.count(
@@ -474,13 +524,6 @@ class _Exo9State extends State<Exo9> {
               showFullImage();
             },
             child: Text('Afficher l\'image complète'),
-          ),
-          SizedBox(height: 10),
-          ElevatedButton(
-            onPressed: () {
-              shuffleTiles();
-            },
-            child: Text('Mélanger les tuiles'),
           ),
           SizedBox(height: 10),
           Row(
