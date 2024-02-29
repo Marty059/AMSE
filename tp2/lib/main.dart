@@ -14,6 +14,7 @@ import 'package:tp2/Exo7_bis.dart';
 import 'package:tp2/Exo7_ter.dart';
 import 'package:tp2/Exo8.dart';
 import 'package:tp2/Exo8_bis.dart';
+import 'package:tp2/Exo9.dart';
 
 void main() {
   runApp(MyApp());
@@ -76,28 +77,28 @@ class _MyHomePageState extends State<MyHomePage> {
         page = Exo6();
         break;
       case 5:
-        page = Exo6_bis();
-        break;
-      case 6:
         page = Exo6_ter();
         break;
-      case 7:
+      case 6:
         page = Exo6_quar();
         break;
-      case 8:
+      case 7:
         page = Exo7();
         break;
-      case 9:
+      case 8:
         page = Exo7_bis();
         break;
-      case 10:
+      case 9:
         page = Exo7_ter();
         break;
-      case 11:
+      case 10:
         page = Exo8();
         break;
-      case 12:
+      case 11:
         page = Exo8_bis();
+        break;
+      case 12:
+        page = Exo9();
         break;
       case 13:
         page = Placeholder();
@@ -137,10 +138,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: 'Exo6',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.bike_scooter),
-                  label: 'Exo6_bis',
-                ),
-                BottomNavigationBarItem(
                   icon: Icon(Icons.seven_k),
                   label: 'Exo6_ter',
                 ),
@@ -169,7 +166,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: 'Exo8_bis',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.local_convenience_store_sharp),
+                  icon: Icon(Icons.sports_esports),
+                  label: 'Exo9',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.gamepad),
                   label: 'Taquin',
                 ),
               ],
