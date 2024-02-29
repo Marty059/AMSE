@@ -359,11 +359,26 @@ class _Exo8State extends State<Exo8> {
             child: Text('Mélanger les tuiles'),
           ),
           SizedBox(height: 10),
-          ElevatedButton(
-            onPressed: () {
-              choixImage(context);
-            },
-            child: Text('Choisir une image de fond'),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  choixImage(context);
+                },
+                child: Text('Choisir une image de fond prédéfinie'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    Tile.imageURL = 'https://picsum.photos/1024';
+                    Tile.network = true;
+                  });
+                },
+                child: Text('Revenir à Picsum'),
+              ),
+            ],
           ),
         ],
       ),
