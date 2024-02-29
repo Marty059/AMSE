@@ -5,15 +5,15 @@ import 'dart:async';
 enum Difficulty { easy, medium, hard }
 
 class Tile {
-  String imageURL;
+  static String imageURL = 'https://picsum.photos/1024';
   Alignment alignment;
   int position_initiale;
   int position_actuelle;
   bool vide;
+  static bool network = true;
 
   Tile(
-      {required this.imageURL,
-      required this.alignment,
+      {required this.alignment,
       required this.position_initiale,
       required this.position_actuelle,
       required this.vide});
@@ -24,11 +24,10 @@ class Tile {
       child: ClipRect(
         child: Container(
           child: Align(
-            alignment: this.alignment,
-            widthFactor: taille,
-            heightFactor: taille,
-            child: Image.network(this.imageURL),
-          ),
+              alignment: this.alignment,
+              widthFactor: taille,
+              heightFactor: taille,
+              child: network ? Image.network(imageURL) : Image.asset(imageURL)),
         ),
       ),
     );
@@ -74,7 +73,6 @@ class _Exo8State extends State<Exo8> {
 
     for (int i = 0; i < totalTiles; i++) {
       tiles.add(Tile(
-        imageURL: 'https://picsum.photos/1024',
         alignment: calculateAlignment(i),
         position_initiale: i,
         position_actuelle: i,
@@ -208,7 +206,9 @@ class _Exo8State extends State<Exo8> {
       context: context,
       builder: (_) => AlertDialog(
         title: Text('Aide : Image complète du Taquin'),
-        content: Image.network('https://picsum.photos/1024'),
+        content: Tile.network
+            ? Image.network(Tile.imageURL)
+            : Image.asset(Tile.imageURL),
         actions: [
           TextButton(
             onPressed: () {
@@ -248,6 +248,41 @@ class _Exo8State extends State<Exo8> {
     } else {
       return Difficulty.hard;
     }
+  }
+
+  List<String> images = [
+    'assets/imgs/alien.png',
+    'assets/imgs/carotte.png',
+    'assets/imgs/Champi.png',
+    'assets/imgs/landscape.png',
+    'assets/imgs/soleil.png',
+  ];
+
+  Future<void> choixImage(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Choisir une image'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: images.map((String image) {
+                return ListTile(
+                  title: Text(image),
+                  onTap: () {
+                    setState(() {
+                      Tile.imageURL = image;
+                      Tile.network = false;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -319,6 +354,13 @@ class _Exo8State extends State<Exo8> {
               shuffleTiles();
             },
             child: Text('Mélanger les tuiles'),
+          ),
+          SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () {
+              choixImage(context);
+            },
+            child: Text('Choisir une image de fond'),
           ),
         ],
       ),
