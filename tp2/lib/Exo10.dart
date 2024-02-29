@@ -220,12 +220,16 @@ class _Exo9State extends State<Exo9> {
         // Choisir un mouvement aléatoire parmi les mouvements valides
         int randomMove = Random().nextInt(validMoves.length);
         int newPosition = validMoves[randomMove];
+
+        // Effectuer le mouvement
         moveTile(newPosition);
+
+        // Vider l'historique des mouvements
+        movesHistory.clear();
       }
       if (!_stopwatch.isRunning) {
         _startTimer();
       }
-      movesHistory.clear();
       partieEnCours = true;
     });
   }
@@ -483,31 +487,26 @@ class _Exo9State extends State<Exo9> {
                     ),
                   ],
                 )
-              : Column(
-                  children: [
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        setState(() {});
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => Exo9()),
-                        );
-                      },
-                      icon: Icon(Icons.play_arrow,
-                          color: Colors.white), // Ajoutez l'icône ici
-                      label: Text(
-                        'Nouvelle Partie',
-                        style: TextStyle(
-                            color: Colors.green[900]), // Texte en vert foncé
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors
-                            .lightGreen[200], // Fond de bouton en vert clair
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                  ],
+              : ElevatedButton.icon(
+                  onPressed: () {
+                    setState(() {});
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => Exo9()),
+                    );
+                  },
+                  icon: Icon(Icons.play_arrow,
+                      color: Colors.white), // Ajoutez l'icône ici
+                  label: Text(
+                    'Nouvelle Partie',
+                    style: TextStyle(
+                        color: Colors.green[900]), // Texte en vert foncé
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Colors.lightGreen[200], // Fond de bouton en vert clair
+                  ),
                 ),
           SizedBox(height: 5),
           Expanded(
