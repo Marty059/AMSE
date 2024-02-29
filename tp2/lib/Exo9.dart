@@ -486,14 +486,12 @@ class _Exo9State extends State<Exo9> {
                 )
               : ElevatedButton.icon(
                   onPressed: () {
-                    setState(() {
-                      shuffleTiles();
-                      _stopwatch.stop();
-                      _elapsedTime = '';
-                      partieEnCours = true;
-                      generateTiles();
-                      deplacement = 0;
-                    });
+                    setState(() {});
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => Exo9()),
+                    );
                   },
                   icon: Icon(Icons.play_arrow,
                       color: Colors.white), // Ajoutez l'icône ici
