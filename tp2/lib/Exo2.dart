@@ -1,3 +1,7 @@
+/*
+Exo 2 : Transformer une image
+*/
+
 import 'package:flutter/material.dart';
 
 void main() {

@@ -1,3 +1,8 @@
+/*
+Exo 7_bis : Ajout de du choix de la taille du taquin et du chronomètre
+Ajout du nombre de déplacements
+*/
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:async';

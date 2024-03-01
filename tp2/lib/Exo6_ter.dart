@@ -1,3 +1,9 @@
+/*
+Exo 6_ter : Gestion de l'échange entre une tuile vide et une tuile adjacente + gestion des mouvements valides
+Gestion de la victoire
+Ajout d'un bouton pour afficher l'image complète -> aide pour le joueur
+*/
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 

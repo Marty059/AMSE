@@ -3,18 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:tp2/Exo1.dart';
 import 'package:tp2/Exo2.dart';
 import 'package:tp2/Exo4.dart';
-
 import 'package:tp2/Exo5.dart';
 import 'package:tp2/Exo6.dart';
-import 'package:tp2/Exo6_bis.dart';
-import 'package:tp2/Exo6_quar.dart';
 import 'package:tp2/Exo6_ter.dart';
-import 'package:tp2/Exo7.dart';
 import 'package:tp2/Exo7_bis.dart';
 import 'package:tp2/Exo7_ter.dart';
-import 'package:tp2/Exo8.dart';
 import 'package:tp2/Exo8_bis.dart';
-import 'package:tp2/Exo9.dart';
+import 'package:tp2/Home.dart';
+import 'package:tp2/Taquin.dart';
 
 void main() {
   runApp(MyApp());
@@ -44,7 +40,6 @@ class MyApp extends StatelessWidget {
 class MyAppState extends ChangeNotifier {
   @override
   void notifyListeners() {
-    // TODO: implement notifyListeners
     super.notifyListeners();
   }
 }
@@ -62,46 +57,34 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = Exo1();
+        page = HomePage();
         break;
       case 1:
-        page = Exo2();
+        page = Exo1();
         break;
       case 2:
-        page = Exo4();
+        page = Exo2();
         break;
       case 3:
-        page = Exo5();
+        page = Exo4();
         break;
       case 4:
-        page = Exo6();
+        page = Exo5();
         break;
       case 5:
-        page = Exo6_ter();
+        page = Exo6();
         break;
       case 6:
-        page = Exo6_quar();
+        page = Exo6_ter();
         break;
       case 7:
-        page = Exo7();
-        break;
-      case 8:
         page = Exo7_bis();
         break;
-      case 9:
-        page = Exo7_ter();
-        break;
-      case 10:
-        page = Exo8();
-        break;
-      case 11:
+      case 8:
         page = Exo8_bis();
         break;
-      case 12:
-        page = Exo9();
-        break;
-      case 13:
-        page = Placeholder();
+      case 9:
+        page = Taquin();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -117,6 +100,10 @@ class _MyHomePageState extends State<MyHomePage> {
           return SafeArea(
             child: BottomNavigationBar(
               items: [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.one_k),
                   label: 'Exo1',
@@ -138,39 +125,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: 'Exo6',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.seven_k),
+                  icon: Icon(Icons.six_k_plus),
                   label: 'Exo6_ter',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.car_crash),
-                  label: 'Exo6_quar',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.eight_k_plus),
-                  label: 'Exo7',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.nine_k_plus),
+                  icon: Icon(Icons.seven_k),
                   label: 'Exo7_bis',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.ten_k),
-                  label: 'Exo7_ter',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.wine_bar),
-                  label: 'Exo8',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.school),
+                  icon: Icon(Icons.eight_k),
                   label: 'Exo8_bis',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.sports_esports),
-                  label: 'Exo9',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.gamepad),
                   label: 'Taquin',
                 ),
               ],

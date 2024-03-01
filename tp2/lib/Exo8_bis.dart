@@ -1,3 +1,8 @@
+/*
+Exo 8_bis : Interface graphique  de l'AppBar : plus ergonomique
+Ajout de l'historique des coups
+*/
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:async';
@@ -178,14 +183,14 @@ class _Exo8_bisState extends State<Exo8_bis> {
 
   void shuffleTiles() {
     setState(() {
-      // Réinitialiser le taquin à l'état initial
-      //tiles = generateTiles();
-
       // Vider l'historique des mouvements
       movesHistory.clear();
 
       // Nombre de mouvements aléatoires pour mélanger le taquin
-      int numberOfMoves = 100; // Nombre de mouvements pour mélanger le taquin
+      int numberOfMoves = 100;
+
+      // Variable pour stocker la position précédente de la tuile vide
+      int? previousEmptyTilePosition;
 
       // Effectuer des mouvements aléatoires valides
       for (int i = 0; i < numberOfMoves; i++) {
@@ -195,23 +200,38 @@ class _Exo8_bisState extends State<Exo8_bis> {
         int emptyRow = emptyTilePosition ~/ taille_grille;
         int emptyColumn = emptyTilePosition % taille_grille;
 
-        if (emptyRow > 0) validMoves.add(emptyTilePosition - taille_grille);
-        if (emptyRow < taille_grille - 1)
+        // Ajouter les mouvements valides à la liste
+        if (emptyRow > 0 &&
+            emptyTilePosition - taille_grille != previousEmptyTilePosition) {
+          validMoves.add(emptyTilePosition - taille_grille);
+        }
+        if (emptyRow < taille_grille - 1 &&
+            emptyTilePosition + taille_grille != previousEmptyTilePosition) {
           validMoves.add(emptyTilePosition + taille_grille);
-        if (emptyColumn > 0) validMoves.add(emptyTilePosition - 1);
-        if (emptyColumn < taille_grille - 1)
+        }
+        if (emptyColumn > 0 &&
+            emptyTilePosition - 1 != previousEmptyTilePosition) {
+          validMoves.add(emptyTilePosition - 1);
+        }
+        if (emptyColumn < taille_grille - 1 &&
+            emptyTilePosition + 1 != previousEmptyTilePosition) {
           validMoves.add(emptyTilePosition + 1);
+        }
 
         // Choisir un mouvement aléatoire parmi les mouvements valides
         int randomMove = Random().nextInt(validMoves.length);
         int newPosition = validMoves[randomMove];
-
-        // Effectuer le mouvement
         moveTile(newPosition);
 
-        // Vider l'historique des mouvements
-        movesHistory.clear();
+        // Mettre à jour la position précédente de la tuile vide
+        previousEmptyTilePosition = emptyTilePosition;
       }
+
+      if (!_stopwatch.isRunning) {
+        _startTimer();
+      }
+      movesHistory.clear();
+      partieEnCours = true;
     });
   }
 
@@ -238,13 +258,13 @@ class _Exo8_bisState extends State<Exo8_bis> {
     setState(() {
       switch (difficulty) {
         case Difficulty.easy:
-          taille_grille = 3;
+          taille_grille = 2;
           break;
         case Difficulty.medium:
-          taille_grille = 4;
+          taille_grille = 2;
           break;
         case Difficulty.hard:
-          taille_grille = 5;
+          taille_grille = 4;
           break;
       }
       tiles = generateTiles();

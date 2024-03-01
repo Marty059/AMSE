@@ -1,7 +1,16 @@
+/*
+Version finale : Taquin
+
+Ajout du choix d'images prédéfinies
+Gestion de la difficulté du mélange
+Possibilité de recommencer une partie
+*/
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:async';
 
+// Enum pour la taille de la grille et la difficulté
 enum TailleGrille {
   DeuxParDeux,
   TroisParTrois,
@@ -16,6 +25,7 @@ enum NiveauDifficulte {
   Difficile,
 }
 
+// Classe pour les tuiles
 class Tile {
   static String imageURL = 'https://picsum.photos/1024';
   Alignment alignment;
@@ -46,12 +56,12 @@ class Tile {
   }
 }
 
-class Exo9 extends StatefulWidget {
+class Taquin extends StatefulWidget {
   @override
-  _Exo9State createState() => _Exo9State();
+  _TaquinState createState() => _TaquinState();
 }
 
-class _Exo9State extends State<Exo9> {
+class _TaquinState extends State<Taquin> {
   int taille_grille = 3;
   List<Tile> tiles = [];
   int deplacement = 0;
@@ -100,6 +110,7 @@ class _Exo9State extends State<Exo9> {
     return tiles;
   }
 
+  // Méthode pour calculer l'alignement des tuiles
   Alignment calculateAlignment(int position_initiale) {
     int row = position_initiale ~/ taille_grille;
     int column = position_initiale % taille_grille;
@@ -120,7 +131,6 @@ class _Exo9State extends State<Exo9> {
       Tile emptyTile = tiles[emptyTilePosition];
       Tile tileToSwap = tiles[position_actuelle];
 
-      // Sauvegarder l'état avant le mouvement uniquement s'il y a eu un changement
       if (emptyTile.position_actuelle != position_actuelle) {
         movesHistory.add(emptyTilePosition);
       }
@@ -134,7 +144,6 @@ class _Exo9State extends State<Exo9> {
       if (partieEnCours == true) {
         deplacement += 1;
 
-        // Démarrer le chronomètre si ce n'est pas déjà fait
         if (!_stopwatch.isRunning) {
           _startTimer();
         }
@@ -196,15 +205,13 @@ class _Exo9State extends State<Exo9> {
   // Méthode pour mélanger les tuiles
   void shuffleTiles() {
     setState(() {
-      // Vider l'historique des mouvements
+      // Vider l'historique des mouvements -> Début d'une nouvelle partie sans l'historique du mélange
       movesHistory.clear();
 
-      // Nombre de mouvements aléatoires pour mélanger le taquin
       int numberOfMoves = getNumberOfMovesForDifficulty();
 
-      // Effectuer des mouvements aléatoires valides
+      // Définition des mouvements valides pour le mélange
       for (int i = 0; i < numberOfMoves; i++) {
-        // Obtenir une liste de mouvements valides
         List<int> validMoves = [];
         int emptyTilePosition = tiles.indexWhere((tile) => tile.vide);
         int emptyRow = emptyTilePosition ~/ taille_grille;
@@ -220,16 +227,13 @@ class _Exo9State extends State<Exo9> {
         // Choisir un mouvement aléatoire parmi les mouvements valides
         int randomMove = Random().nextInt(validMoves.length);
         int newPosition = validMoves[randomMove];
-
-        // Effectuer le mouvement
         moveTile(newPosition);
-
-        // Vider l'historique des mouvements
-        movesHistory.clear();
       }
+      // Début de partie -> Initialisation du chronomètre
       if (!_stopwatch.isRunning) {
         _startTimer();
       }
+      movesHistory.clear();
       partieEnCours = true;
     });
   }
@@ -248,6 +252,7 @@ class _Exo9State extends State<Exo9> {
     }
   }
 
+  // Méthode pour afficher l'image complète -> Aide pour le joueur
   void showFullImage() {
     showDialog(
       context: context,
@@ -292,7 +297,7 @@ class _Exo9State extends State<Exo9> {
     });
   }
 
-  // Ajoutez cette fonction pour obtenir la difficulté actuelle
+  // Méthode pour obtenir la taille de la grille actuelle (valeur affichée dans la liste déroulante)
   TailleGrille _getCurrentTailleGrille() {
     if (taille_grille == 2)
       return TailleGrille.DeuxParDeux;
@@ -306,6 +311,7 @@ class _Exo9State extends State<Exo9> {
       return TailleGrille.SixParSix;
   }
 
+  // Méthode pour annuler un mouvement
   void undoMove() {
     if (partieEnCours == true) {
       if (movesHistory.isNotEmpty) {
@@ -322,13 +328,13 @@ class _Exo9State extends State<Exo9> {
           emptyTile.position_actuelle = lastMove;
           tileToSwap.position_actuelle = emptyTilePosition;
 
-          // Décrémenter le compteur de mouvements
           deplacement -= 1;
         });
       }
     }
   }
 
+  // Liste des images prédéfinies
   List<String> images = [
     'assets/imgs/👽 Alien 👽.png',
     'assets/imgs/⚽️ France ⚽️.png',
@@ -339,6 +345,7 @@ class _Exo9State extends State<Exo9> {
     'assets/imgs/Super prof quon adore.png',
   ];
 
+  // Méthode pour choisir une image prédéfinie
   Future<void> choixImage(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -367,6 +374,7 @@ class _Exo9State extends State<Exo9> {
     );
   }
 
+  // Méthode pour construire l'interface
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -413,7 +421,6 @@ class _Exo9State extends State<Exo9> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text('Taille du Taquin : '),
-                            //SizedBox(height: 5),
                             DropdownButton<TailleGrille>(
                               value: _getCurrentTailleGrille(),
                               onChanged: (TailleGrille? newValue) {
@@ -473,40 +480,39 @@ class _Exo9State extends State<Exo9> {
                       onPressed: () {
                         shuffleTiles();
                       },
-                      icon: Icon(Icons.play_arrow,
-                          color: Colors.white), // Ajoutez l'icône ici
+                      icon: Icon(Icons.play_arrow, color: Colors.white),
                       label: Text(
                         'Démarrer la partie',
-                        style: TextStyle(
-                            color: Colors.green[900]), // Texte en vert foncé
+                        style: TextStyle(color: Colors.green[900]),
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors
-                            .lightGreen[200], // Fond de bouton en vert clair
+                        backgroundColor: Colors.lightGreen[200],
                       ),
                     ),
                   ],
                 )
-              : ElevatedButton.icon(
-                  onPressed: () {
-                    setState(() {});
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => Exo9()),
-                    );
-                  },
-                  icon: Icon(Icons.play_arrow,
-                      color: Colors.white), // Ajoutez l'icône ici
-                  label: Text(
-                    'Nouvelle Partie',
-                    style: TextStyle(
-                        color: Colors.green[900]), // Texte en vert foncé
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Colors.lightGreen[200], // Fond de bouton en vert clair
-                  ),
+              : Column(
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        setState(() {});
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => Taquin()),
+                        );
+                      },
+                      icon: Icon(Icons.play_arrow, color: Colors.white),
+                      label: Text(
+                        'Nouvelle Partie',
+                        style: TextStyle(color: Colors.green[900]),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.lightGreen[200],
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                  ],
                 ),
           SizedBox(height: 5),
           Expanded(
@@ -520,11 +526,12 @@ class _Exo9State extends State<Exo9> {
             ),
           ),
           SizedBox(height: 20),
-          ElevatedButton(
+          ElevatedButton.icon(
             onPressed: () {
               showFullImage();
             },
-            child: Text('Afficher l\'image complète'),
+            icon: Icon(Icons.image),
+            label: Text('Afficher l\'image complète'),
           ),
           SizedBox(height: 10),
           Row(

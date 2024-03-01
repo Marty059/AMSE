@@ -1,3 +1,7 @@
+/*
+Exo 5 : Génération du plateau de tuiles avec slider
+*/
+
 import 'package:flutter/material.dart';
 
 class Tile {

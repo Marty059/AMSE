@@ -1,3 +1,8 @@
+/*
+Exo 6 : Animation d'une tuile
+Echange de 2 tuiles avec l'index en paramètre (ici 2 et 3)
+*/
+
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 

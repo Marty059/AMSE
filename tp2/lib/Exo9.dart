@@ -521,11 +521,12 @@ class _Exo9State extends State<Exo9> {
             ),
           ),
           SizedBox(height: 20),
-          ElevatedButton(
+          ElevatedButton.icon(
             onPressed: () {
               showFullImage();
             },
-            child: Text('Afficher l\'image complète'),
+            icon: Icon(Icons.image),
+            label: Text('Afficher l\'image complète'),
           ),
           SizedBox(height: 10),
           Row(

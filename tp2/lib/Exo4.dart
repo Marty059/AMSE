@@ -1,3 +1,7 @@
+/*
+Exo 4 : Affichage d'une tuile
+*/
+
 import 'package:flutter/material.dart';
 
 class Tile {

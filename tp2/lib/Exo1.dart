@@ -1,3 +1,7 @@
+/*
+Exo 1 : afficher une image
+*/
+
 import 'package:flutter/material.dart';
 
 class Exo1 extends StatelessWidget {
