@@ -1,3 +1,24 @@
+/*
+Bonjour Monsieur,
+
+Vous trouverez l'avançement de notre projet de développement d'un jeu de taquin dans les différents exercices.
+Liste des fichiers intéressants à regarder pour comprendre notre cheminement :
+-Exo 1
+-Exo 2
+-Exo 4
+-Exo 6
+-Exo 6_ter
+-Exo 7_bis
+-Exo 8_bis
+-Taquin (Version finale du jeu de taquin)
+
+Les autres fichiers contiennent des tests / petites modifications pour comprendre le fonctionnement de Flutter.
+
+Bonne lecture,
+
+Géry et Martin
+*/
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tp2/Exo1.dart';
